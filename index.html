@@ -1,0 +1,1752 @@
+<div class="intro-conclusion">
+                    إن الاستثمار في تعليم الطفولة المبكرة هو استثمار مجتمعي راشد، يحقق النفع العام، ويهيّئ جيلاً مهذّبًا متعلّمًا، ويخفّف الأعباء عن الأسر، ويعزّز قيم التعاون والتكافل في الحي.
+                </div>
+            </div>
+        </header>
+
+        <div class="warnings-section" id="warningsSection">
+            <div class="warnings-header">
+                <div class="warnings-title">
+                    ⚠️ أطفال خارج النطاق العمري المقبول (أكثر من 8 سنوات) - يحتاجون متابعة
+                </div>
+                <button class="close-warnings-btn" id="closeWarningsBtn">✖ إخفاء</button>
+            </div>
+            <div class="warning-cards" id="warningCards"></div>
+        </div>
+
+        <div class="kpi-section" id="kpiSection">
+            <div class="kpi-card">
+                <div class="kpi-icon-container">
+                    <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 21V19C16 17.9391 15.5786 16.9217 14.8284 16.1716C14.0783 15.4214 13.0609 15 12 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M12.5 7C12.5 9.20914 10.7091 11 8.5 11C6.29086 11 4.5 9.20914 4.5 7C4.5 4.79086 6.29086 3 8.5 3C10.7091 3 12.5 4.79086 12.5 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="kpi-value" id="totalChildren">0</div>
+                <div class="kpi-label">إجمالي عدد الأطفال</div>
+                <div class="kpi-sublabel">في الحي المستهدف</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon-container">
+                    <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="kpi-value" id="avgAge">0</div>
+                <div class="kpi-label">متوسط الأعمار</div>
+                <div class="kpi-sublabel">بالسنوات الكاملة</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon-container">
+                    <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 21H21M3 10H21M5 6L12 3L19 6M4 10V21M20 10V21M8 14V17M12 14V17M16 14V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="kpi-value" id="classrooms">0</div>
+                <div class="kpi-label">الشعب المطلوبة</div>
+                <div class="kpi-sublabel">بمعدل 20 طفل/شعبة</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon-container">
+                    <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="kpi-value" id="teachers">0</div>
+                <div class="kpi-label">المعلمات المطلوبات</div>
+                <div class="kpi-sublabel">معلمة لكل شعبة</div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card large">
+                <div class="chart-title">
+                    <svg class="chart-title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    التوزيع التفصيلي للأعمار
+                </div>
+                <div class="chart-container">
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <svg class="chart-title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 12L12 2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 12L19 16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        توزيع الجنس
+                    </div>
+                    <div class="chart-container small">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <svg class="chart-title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        الخبرة السابقة بالروضة
+                    </div>
+                    <div class="chart-container small">
+                        <canvas id="kgChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="students-section">
+            <div class="students-header">
+                <div class="students-title">
+                    <svg class="students-title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5M12 12H15M12 16H15M9 12H9.01M9 16H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    قائمة الأطفال المسجلين
+                </div>
+                <div class="students-count">العدد: <span id="listCount">0</span></div>
+            </div>
+            <div class="students-grid" id="studentsList"></div>
+        </div>
+
+        <footer>
+            <p>📈 تم إعداد هذه الدراسة التحليلية لتقديم رؤية شاملة واستثمارية عن احتياجات الحي التعليمية | 2025</p>
+        </footer>
+    </div>
+
+    <div class="floating-buttons right">
+        <button class="floating-btn filter-btn" id="filterBtn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 4.5H21M3 9H21M6 13.5H18M9 18H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="btn-text">تصفية</span>
+        </button>
+    </div>
+
+    <div class="floating-buttons left">
+        <button class="floating-btn reset-btn" id="resetBtn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 4V10H7M23 20V14H17M20.49 9C19.9828 7.56678 19.1209 6.28536 17.9845 5.27542C16.8482 4.26548 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93434 9.50481 3.35677C8.04437 3.77921 6.71475 4.56471 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4353 15.9556 20.2208 14.4952 20.6432C13.0348 21.0657 11.4911 21.1113 10.0083 20.7757C8.52547 20.4402 7.1518 19.7345 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="btn-text">إعادة تعيين</span>
+        </button>
+    </div>
+
+    <button class="floating-btn admin-btn" id="adminBtn">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="btn-text">إعدادات</span>
+    </button>
+
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-title">🔐 لوحة الإدارة</div>
+            <input type="password" class="admin-input" id="adminPassword" placeholder="أدخل كلمة السر">
+            <div class="admin-buttons">
+                <button class="admin-submit" id="adminSubmit">دخول</button>
+                <button class="admin-cancel" id="adminCancel">إلغاء</button>
+            </div>
+            <div class="admin-error" id="adminError"></div>
+        </div>
+    </div>
+
+    <script>
+        // ========== إعدادات ==========
+        const ADMIN_PASSWORD = "Masaken2025"; // غيّر كلمة السر هنا
+        const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/12xt79hkAjkh3SpEjfwAQNeEDvdhtfna7VkEuL9yVj3A/gviz/tq?tqx=out:json';
+        const USE_LOCAL_DATA = false; // غيّر إلى true لاستخدام البيانات المحلية للاختبار
+
+        let childrenData = [];
+        let filteredData = [];
+        let charts = {};
+        let warningsData = [];
+        let allDataWithParents = []; // لحفظ البيانات الكاملة مع معلومات الأهل
+
+        // البيانات المحلية للاختبار (مع معلومات الأهل)
+        const localDataWithParents = [
+            {childName: "مطرة", age: 5, gender: "أنثى", prevKG: false, fatherName: "أحمد الرشيد", phone: "997196942"},
+            {childName: "نضال", age: 4, gender: "ذكر", prevKG: false, fatherName: "احمد العمر", phone: "997733923"},
+            {childName: "فايز عباس", age: 4, gender: "ذكر", prevKG: false, fatherName: "عبد الجبار فايز", phone: "998562648"},
+            {childName: "فاطمة", age: 4, gender: "أنثى", prevKG: false, fatherName: "محمد السعيد", phone: "996711823"},
+            {childName: "حيدر", age: 3, gender: "ذكر", prevKG: false, fatherName: "علي حسن", phone: "995234567"},
+            {childName: "خطاب", age: 5, gender: "ذكر", prevKG: false, fatherName: "سعيد خطاب", phone: "994567890"},
+            {childName: "فاروق", age: 3, gender: "ذكر", prevKG: false, fatherName: "عمر فاروق", phone: "993456789"},
+            {childName: "مرشد", age: 4, gender: "ذكر", prevKG: false, fatherName: "يوسف مرشد", phone: "992345678"},
+            {childName: "ألين القدور", age: 4, gender: "أنثى", prevKG: true, fatherName: "خالد القدور", phone: "991234567"},
+            {childName: "شروق", age: 5, gender: "أنثى", prevKG: true, fatherName: "أحمد شروق", phone: "990123456"},
+            {childName: "يزن", age: 3, gender: "ذكر", prevKG: false, fatherName: "محمود يزن", phone: "999876543"},
+            {childName: "بهاء الدين", age: 5, gender: "ذكر", prevKG: false, fatherName: "عبدالله بهاء", phone: "998765432"},
+            {childName: "أروى", age: 3, gender: "أنثى", prevKG: false, fatherName: "سامي أروى", phone: "997654321"},
+            {childName: "إبراهيم", age: 5, gender: "ذكر", prevKG: false, fatherName: "حسن إبراهيم", phone: "996543210"},
+            {childName: "خطاب", age: 5, gender: "ذكر", prevKG: false, fatherName: "فهد خطاب", phone: "995432109"},
+            {childName: "حمزة", age: 5, gender: "ذكر", prevKG: true, fatherName: "طارق حمزة", phone: "994321098"},
+            {childName: "عائشة", age: 4, gender: "أنثى", prevKG: false, fatherName: "عمر عائشة", phone: "993210987"},
+            {childName: "نوال", age: 4, gender: "أنثى", prevKG: true, fatherName: "سعد نوال", phone: "992109876"},
+            {childName: "محمد مروان", age: 3, gender: "ذكر", prevKG: false, fatherName: "مروان أحمد", phone: "991098765"},
+            {childName: "صهيب الخطيب", age: 5, gender: "ذكر", prevKG: false, fatherName: "خالد الخطيب", phone: "990987654"},
+            {childName: "غصون شيخة", age: 5, gender: "أنثى", prevKG: false, fatherName: "محمد شيخة", phone: "999765432"},
+            {childName: "ايمان", age: 5, gender: "أنثى", prevKG: false, fatherName: "عبدالرحمن ايمان", phone: "998654321"},
+            {childName: "جنى الحنيني", age: 5, gender: "أنثى", prevKG: false, fatherName: "أحمد الحنيني", phone: "997543210"},
+            {childName: "رحمة", age: 5, gender: "أنثى", prevKG: true, fatherName: "يوسف رحمة", phone: "996432109"},
+            {childName: "محمد عبدو", age: 3, gender: "ذكر", prevKG: false, fatherName: "عبدو محمد", phone: "995321098"},
+            {childName: "أنس", age: 5, gender: "ذكر", prevKG: false, fatherName: "سامي أنس", phone: "994210987"},
+            {childName: "سلمى عمار الشبيب", age: 4, gender: "أنثى", prevKG: false, fatherName: "عمار الشبيب", phone: "993109876"},
+            {childName: "لؤي عرعور", age: 3, gender: "ذكر", prevKG: false, fatherName: "فهد عرعور", phone: "992098765"},
+            {childName: "خالد الأحمد", age: 5, gender: "ذكر", prevKG: false, fatherName: "علي الأحمد", phone: "991987654"},
+            {childName: "نور الأحمد", age: 3, gender: "أنثى", prevKG: false, fatherName: "علي الأحمد", phone: "991987654"},
+            {childName: "اسلام", age: 5, gender: "أنثى", prevKG: false, fatherName: "محمود اسلام", phone: "990876543"},
+            {childName: "احمد", age: 4, gender: "ذكر", prevKG: false, fatherName: "خالد احمد", phone: "999654321"},
+            {childName: "رنيم", age: 4, gender: "أنثى", prevKG: true, fatherName: "سعيد رنيم", phone: "998543210"},
+            {childName: "وتين", age: 5, gender: "أنثى", prevKG: false, fatherName: "عمر وتين", phone: "997432109"},
+            {childName: "يقين", age: 4, gender: "أنثى", prevKG: false, fatherName: "طارق يقين", phone: "996321098"},
+            {childName: "هناء", age: 4, gender: "أنثى", prevKG: false, fatherName: "حسن هناء", phone: "995210987"},
+            {childName: "عمار السليمان", age: 4, gender: "ذكر", prevKG: false, fatherName: "محمد السليمان", phone: "994109876"},
+            {childName: "فاطمة النابو", age: 4, gender: "أنثى", prevKG: false, fatherName: "أحمد النابو", phone: "993098765"},
+            {childName: "انس", age: 4, gender: "ذكر", prevKG: true, fatherName: "يوسف انس", phone: "992987654"},
+            {childName: "عمر فتح الله", age: 3, gender: "ذكر", prevKG: false, fatherName: "سامي فتح الله", phone: "991876543"},
+            {childName: "سيدرا علوش", age: 5, gender: "أنثى", prevKG: false, fatherName: "علي علوش", phone: "990765432"},
+            {childName: "مصطفى علوش", age: 4, gender: "ذكر", prevKG: false, fatherName: "علي علوش", phone: "990765432"},
+            // أطفال خارج النطاق (للتجربة)
+            {childName: "طه خلف", age: 20, gender: "ذكر", prevKG: false, fatherName: "خلف الدين", phone: "997123456"},
+            {childName: "سيدرا الجمال", age: 7, gender: "أنثى", prevKG: false, fatherName: "محمد الجمال", phone: "996234567"},
+            {childName: "تسنيم الجمال", age: 7, gender: "أنثى", prevKG: false, fatherName: "محمد الجمال", phone: "996234567"},
+            {childName: "عماد", age: 2, gender: "ذكر", prevKG: false, fatherName: "عبد الهادي رحيم", phone: "995345678"},
+            {childName: "ريّان الدياب", age: 2, gender: "ذكر", prevKG: false, fatherName: "أحمد الدياب", phone: "994456789"},
+            {childName: "خديجه", age: 9, gender: "أنثى", prevKG: false, fatherName: "سعيد خديجة", phone: "993567890"}
+        ];
+
+        // تحميل البيانات من Google Sheets
+        async function loadDataFromGoogleSheets() {
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL);
+                const data = await response.json();
+                
+                // تحويل البيانات من Google Sheets
+                allDataWithParents = data.values.slice(1).map(row => ({
+                    childName: row[0],
+                    age: parseInt(row[1]),
+                    gender: row[2],
+                    prevKG: row[3] === 'نعم',
+                    fatherName: row[4] || 'غير متوفر',
+                    phone: row[5] || 'غير متوفر'
+                }));
+                
+                return true;
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                return false;
+            }
+        }
+
+        // معالجة البيانات وفصل الصحيح من الخطأ
+        function processAllData() {
+            childrenData = [];
+            warningsData = [];
+
+            allDataWithParents.forEach(child => {
+                if (child.age >= 1 && child.age <= 8) {
+                    // أطفال ضمن النطاق المقبول (1-8 سنوات)
+                    childrenData.push({
+                        name: child.childName,
+                        age: child.age,
+                        gender: child.gender,
+                        prevKG: child.prevKG
+                    });
+                } else {
+                    // أطفال خارج النطاق (أكثر من 8 سنوات أو أقل من سنة)
+                    warningsData.push({
+                        childName: child.childName,
+                        age: child.age,
+                        gender: child.gender,
+                        fatherName: child.fatherName,
+                        phone: child.phone
+                    });
+                }
+            });
+        }
+
+        // عرض بطاقات التنبيهات
+        function displayWarnings() {
+            const warningCards = document.getElementById('warningCards');
+            warningCards.innerHTML = '';
+
+            if (warningsData.length === 0) {
+                warningCards.innerHTML = '<div class="no-warnings">✅ ممتاز! جميع الأطفال ضمن النطاق العمري المقبول (1-8 سنوات)</div>';
+                return;
+            }
+
+            warningsData.forEach(warning => {
+                const card = document.createElement('div');
+                card.className = 'warning-card';
+                
+                const ageStatus = warning.age > 8 ? 'أكبر من 8 سنوات' : 'أقل من سنة واحدة';
+                
+                card.innerHTML = `
+                    <div class="warning-card-header">
+                        <span class="warning-icon">${warning.gender === 'ذكر' ? '👦' : '👧'}</span>
+                        <span class="warning-child-name">${warning.childName}</span>
+                    </div>
+                    <div class="warning-details">
+                        <div class="warning-detail-row">
+                            <span class="warning-label">العمر:</span>
+                            <span class="warning-value">${warning.age} سنوات (${warning.gender}) - ${ageStatus}</span>
+                        </div>
+                        <div class="warning-detail-row">
+                            <span class="warning-label">ولي الأمر:</span>
+                            <span class="warning-value">${warning.fatherName}</span>
+                        </div>
+                        <div class="warning-detail-row">
+                            <span class="warning-label">رقم الهاتف:</span>
+                            <span class="warning-phone">📞 ${warning.phone}</span>
+                        </div>
+                    </div>
+                `;
+                
+                warningCards.appendChild(card);
+            });
+
+            document.getElementById('warningsSection').classList.add('show');
+        }
+
+        // إدارة نافذة كلمة السر
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const adminPassword = document.getElementById('adminPassword');
+        const adminSubmit = document.getElementById('adminSubmit');
+        const adminCancel = document.getElementById('adminCancel');
+        const adminError = document.getElementById('adminError');
+        const closeWarningsBtn = document.getElementById('closeWarningsBtn');
+
+        adminBtn.addEventListener('mouseenter', () => {
+            adminBtn.classList.add('expanded');
+        });
+
+        adminBtn.addEventListener('mouseleave', () => {
+            adminBtn.classList.remove('expanded');
+        });
+
+        adminBtn.addEventListener('click', () => {
+            adminModal.classList.add('active');
+            adminPassword.value = '';
+            adminError.textContent = '';
+            adminPassword.focus();
+        });
+
+        adminCancel.addEventListener('click', () => {
+            adminModal.classList.remove('active');
+        });
+
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.classList.remove('active');
+            }
+        });
+
+        adminPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                adminSubmit.click();
+            }
+        });
+
+        adminSubmit.addEventListener('click', () => {
+            const password = adminPassword.value;
+            
+            if (password === ADMIN_PASSWORD) {
+                adminModal.classList.remove('active');
+                displayWarnings();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                adminError.textContent = '❌ كلمة السر غير صحيحة';
+                adminPassword.value = '';
+                adminPassword.focus();
+            }
+        });
+
+        closeWarningsBtn.addEventListener('click', () => {
+            document.getElementById('warningsSection').classList.remove('show');
+        });
+
+        // تهيئة التطبيق
+        async function initApp() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            if (USE_LOCAL_DATA) {
+                allDataWithParents = [...localDataWithParents];
+                processAllData();
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    initCharts();
+                    filteredData = [...childrenData];
+                    updateDashboard();
+                }, 1000);
+            } else {
+                const success = await loadDataFromGoogleSheets();
+                
+                if (success) {
+                    processAllData();
+                    loadingScreen.classList.add('hidden');
+                    initCharts();
+                    filteredData = [...childrenData];
+                    updateDashboard();
+                } else {
+                    alert('فشل في تحميل البيانات من Google Sheets. سيتم استخدام البيانات المحلية.');
+                    allDataWithParents = [...localDataWithParents];
+                    processAllData();
+                    loadingScreen.classList.add('hidden');
+                    initCharts();
+                    filteredData = [...childrenData];
+                    updateDashboard();
+                }
+            }
+        }
+
+        // إدارة لوحة التصفية
+        const filterBtn = document.getElementById('filterBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const filterPanel = document.getElementById('filterPanel');
+        const filterOverlay = document.getElementById('filterOverlay');
+        const closePanelBtn = document.getElementById('closePanelBtn');
+
+        filterBtn.addEventListener('click', () => {
+            filterPanel.classList.add('open');
+            filterOverlay.classList.add('active');
+        });
+
+        filterBtn.addEventListener('mouseenter', () => {
+            filterBtn.classList.add('expanded');
+        });
+
+        filterBtn.addEventListener('mouseleave', () => {
+            filterBtn.classList.remove('expanded');
+        });
+
+        resetBtn.addEventListener('mouseenter', () => {
+            resetBtn.classList.add('expanded');
+        });
+
+        resetBtn.addEventListener('mouseleave', () => {
+            resetBtn.classList.remove('expanded');
+        });
+
+        closePanelBtn.addEventListener('click', () => {
+            filterPanel.classList.remove('open');
+            filterOverlay.classList.remove('active');
+        });
+
+        filterOverlay.addEventListener('click', () => {
+            filterPanel.classList.remove('open');
+            filterOverlay.classList.remove('active');
+        });
+
+        function initCharts() {
+            const ageCtx = document.getElementById('ageChart').getContext('2d');
+            charts.age = new Chart(ageCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['1-2 سنة', '3 سنوات', '4 سنوات', '5 سنوات', '6-8 سنوات'],
+                    datasets: [
+                        {
+                            label: 'ذكور',
+                            data: [0, 0, 0, 0, 0],
+                            backgroundColor: 'rgba(14, 165, 233, 0.85)',
+                            borderRadius: 10,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'إناث',
+                            data: [0, 0, 0, 0, 0],
+                            backgroundColor: 'rgba(236, 72, 153, 0.85)',
+                            borderRadius: 10,
+                            borderWidth: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {family: 'Cairo', size: 15, weight: 'bold'},
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {family: 'Cairo', size: 14},
+                            bodyFont: {family: 'Cairo', size: 13},
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 2,
+                                font: {family: 'Cairo', size: 13, weight: 'bold'}
+                            },
+                            grid: {color: 'rgba(0, 0, 0, 0.05)'}
+                        },
+                        x: {
+                            ticks: {font: {family: 'Cairo', size: 14, weight: 'bold'}},
+                            grid: {display: false}
+                        }
+                    }
+                }
+            });
+
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            charts.gender = new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['ذكور', 'إناث'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['rgba(14, 165, 233, 0.9)', 'rgba(236, 72, 153, 0.9)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {family: 'Cairo', size: 14, weight: 'bold'},
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {family: 'Cairo', size: 14},
+                            bodyFont: {family: 'Cairo', size: 13},
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return label + ': ' + value + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const kgCtx = document.getElementById('kgChart').getContext('2d');
+            charts.kg = new Chart(kgCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['لم يدخل روضة', 'دخل روضة سابقاً'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['rgba(251, 146, 60, 0.9)', 'rgba(52, 211, 153, 0.9)'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {family: 'Cairo', size: 14, weight: 'bold'},
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {family: 'Cairo', size: 14},
+                            bodyFont: {family: 'Cairo', size: 13},
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return label + ': ' + value + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateStudentsList() {
+            const listContainer = document.getElementById('studentsList');
+            listContainer.innerHTML = '';
+
+            filteredData.forEach(child => {
+                const item = document.createElement('div');
+                item.className = 'student-item';
+                
+                const genderBadgeClass = child.gender === 'ذكر' ? 'badge-male' : 'badge-female';
+                const kgBadgeClass = child.prevKG ? 'badge-kg-yes' : 'badge-kg-no';
+                const kgText = child.prevKG ? 'روضة سابقة' : 'جديد';
+                
+                item.innerHTML = `
+                    <div class="student-name">${child.name}</div>
+                    <div class="student-info">
+                        <span class="student-badge badge-age">${child.age} سنوات</span>
+                        <span class="student-badge ${genderBadgeClass}">${child.gender}</span>
+                        <span class="student-badge ${kgBadgeClass}">${kgText}</span>
+                    </div>
+                `;
+                
+                listContainer.appendChild(item);
+            });
+
+            document.getElementById('listCount').textContent = filteredData.length;
+        }
+
+        function updateDashboard() {
+            const total = filteredData.length;
+            const avgAge = total > 0 ? (filteredData.reduce((sum, child) => sum + child.age, 0) / total).toFixed(1) : 0;
+            const classrooms = Math.ceil(total / 20);
+            const teachers = classrooms;
+
+            document.getElementById('totalChildren').textContent = total;
+            document.getElementById('avgAge').textContent = avgAge;
+            document.getElementById('classrooms').textContent = classrooms;
+            document.getElementById('teachers').textContent = teachers;
+
+            const malesAge12 = filteredData.filter(c => (c.age === 1 || c.age === 2) && c.gender === 'ذكر').length;
+            const malesAge3 = filteredData.filter(c => c.age === 3 && c.gender === 'ذكر').length;
+            const malesAge4 = filteredData.filter(c => c.age === 4 && c.gender === 'ذكر').length;
+            const malesAge5 = filteredData.filter(c => c.age === 5 && c.gender === 'ذكر').length;
+            const malesAge68 = filteredData.filter(c => (c.age >= 6 && c.age <= 8) && c.gender === 'ذكر').length;
+            
+            const femalesAge12 = filteredData.filter(c => (c.age === 1 || c.age === 2) && c.gender === 'أنثى').length;
+            const femalesAge3 = filteredData.filter(c => c.age === 3 && c.gender === 'أنثى').length;
+            const femalesAge4 = filteredData.filter(c => c.age === 4 && c.gender === 'أنثى').length;
+            const femalesAge5 = filteredData.filter(c => c.age === 5 && c.gender === 'أنثى').length;
+            const femalesAge68 = filteredData.filter(c => (c.age >= 6 && c.age <= 8) && c.gender === 'أنثى').length;
+
+            charts.age.data.datasets[0].data = [malesAge12, malesAge3, malesAge4, malesAge5, malesAge68];
+            charts.age.data.datasets[1].data = [femalesAge12, femalesAge3, femalesAge4, femalesAge5, femalesAge68];
+            charts.age.update();
+
+            const males = filteredData.filter(c => c.gender === 'ذكر').length;
+            const females = filteredData.filter(c => c.gender === 'أنثى').length;
+            charts.gender.data.datasets[0].data = [males, females];
+            charts.gender.update();
+
+            const noKG = filteredData.filter(c => !c.prevKG).length;
+            const hasKG = filteredData.filter(c => c.prevKG).length;
+            charts.kg.data.datasets[0].data = [noKG, hasKG];
+            charts.kg.update();
+
+            updateStudentsList();
+        }
+
+        function applyFilters() {
+            const ageFilter = document.getElementById('ageFilter').value;
+            const genderFilter = document.getElementById('genderFilter').value;
+            const kgFilter = document.getElementById('kgFilter').value;
+
+            filteredData = childrenData.filter(child => {
+                let passAge = true;
+                let passGender = true;
+                let passKG = true;
+
+                if (ageFilter !== 'all') {
+                    passAge = child.age === parseInt(ageFilter);
+                }
+
+                if (genderFilter !== 'all') {
+                    passGender = child.gender === genderFilter;
+                }
+
+                if (kgFilter !== 'all') {
+                    passKG = child.prevKG === (kgFilter === 'true');
+                }
+
+                return passAge && passGender && passKG;
+            });
+
+            updateDashboard();
+        }
+
+        function resetFilters() {
+            document.getElementById('ageFilter').value = 'all';
+            document.getElementById('genderFilter').value = 'all';
+            document.getElementById('kgFilter').value = 'all';
+            filteredData = [...childrenData];
+            updateDashboard();
+        }
+
+        document.getElementById('ageFilter').addEventListener('change', applyFilters);
+        document.getElementById('genderFilter').addEventListener('change', applyFilters);
+        document.getElementById('kgFilter').addEventListener('change', applyFilters);
+        document.getElementById('resetBtn').addEventListener('click', resetFilters);
+
+        // تهيئة التطبيق عند تحميل الصفحة
+        initApp();
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دراسة جدوى روضة - الحي المستهدف</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+        }
+
+        .loading-screen.hidden {
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+            padding: 50px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(3, 105, 161, 0.3);
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-decoration {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .header-decoration.left {
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .header-decoration.right {
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 35px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            line-height: 2.4;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro-paragraph {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .hadith-box {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 25px 35px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hadith-intro {
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #fff;
+            opacity: 0.95;
+        }
+
+        .hadith-text {
+            font-size: 1.4em;
+            font-weight: 700;
+            font-style: italic;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            margin: 12px 0;
+            line-height: 1.8;
+        }
+
+        .hadith-source {
+            font-size: 0.9em;
+            margin-top: 12px;
+            opacity: 0.85;
+            font-style: italic;
+            color: #fff;
+        }
+
+        .intro-conclusion {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            z-index: 1000;
+        }
+
+        .floating-buttons.left {
+            left: 30px;
+        }
+
+        .floating-buttons.right {
+            right: 30px;
+        }
+
+        .admin-btn {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .admin-btn:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.5);
+        }
+
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .admin-modal.active {
+            display: flex;
+        }
+
+        .admin-modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .admin-modal-title {
+            font-size: 1.8em;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .admin-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-submit {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .admin-cancel {
+            flex: 1;
+            padding: 15px;
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-cancel:hover {
+            background: #e2e8f0;
+        }
+
+        .admin-error {
+            color: #ef4444;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .warnings-section {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 3px solid #f59e0b;
+        }
+
+        .warnings-section.show {
+            display: block;
+        }
+
+        .warnings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #fbbf24;
+        }
+
+        .warnings-title {
+            font-size: 1.8em;
+            color: #92400e;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .close-warnings-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-warnings-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .warning-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .warning-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #fbbf24;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.2);
+            transition: all 0.3s;
+        }
+
+        .warning-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
+        }
+
+        .warning-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #fbbf24;
+        }
+
+        .warning-icon {
+            font-size: 2em;
+        }
+
+        .warning-child-name {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .warning-details {
+            display: grid;
+            gap: 12px;
+        }
+
+        .warning-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+        }
+
+        .warning-label {
+            font-weight: 600;
+            color: #78350f;
+        }
+
+        .warning-value {
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        .warning-phone {
+            direction: ltr;
+            color: #0369a1;
+            font-weight: 700;
+        }
+
+        .no-warnings {
+            text-align: center;
+            padding: 60px;
+            color: #10b981;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .floating-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: visible;
+        }
+
+        .floating-btn.expanded {
+            width: auto;
+            border-radius: 50px;
+            padding: 0 20px;
+            gap: 10px;
+        }
+
+        .floating-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+            flex-shrink: 0;
+        }
+
+        .btn-text {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            color: white;
+            white-space: nowrap;
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-right: 0;
+        }
+
+        .floating-btn.expanded .btn-text {
+            opacity: 1;
+            max-width: 200px;
+            margin-right: 8px;
+        }
+
+        .filter-btn {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(14, 165, 233, 0.5);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(244, 63, 94, 0.5);
+        }
+
+        .filter-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
+            transition: right 0.4s ease;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .filter-panel.open {
+            right: 0;
+        }
+
+        .filter-panel-header {
+            background: linear-gradient(135deg, #0369a1, #0284c7);
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-panel-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .close-panel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-panel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .close-panel-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .filter-panel-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            display: block;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1em;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-group select:hover {
+            border-color: #0ea5e9;
+            background: #f8fafc;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+        }
+
+        .filter-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
+        }
+
+        .filter-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0ea5e9, #34d399);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: #0ea5e9;
+        }
+
+        .kpi-icon-container {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            fill: #0369a1;
+        }
+
+        .kpi-value {
+            font-size: 3.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .kpi-label {
+            font-size: 1.2em;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .kpi-sublabel {
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-top: 8px;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 35px;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-card.large {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .chart-title {
+            font-size: 1.6em;
+            color: #0369a1;
+            margin-bottom: 25px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .chart-title-icon {
+            width: 32px;
+            height: 32px;
+            fill: #0369a1;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+        .chart-container.small {
+            height: 320px;
+        }
+
+        .students-section {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .students-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+
+        .students-title {
+            font-size: 1.6em;
+            color: #0369a1;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .students-title-icon {
+            width: 32px;
+            height: 32px;
+            fill: #0369a1;
+        }
+
+        .students-count {
+            font-size: 1.3em;
+            color: #64748b;
+            font-weight: 600;
+            background: #f1f5f9;
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .student-item {
+            padding: 16px 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .student-item:hover {
+            background: #e0f2fe;
+            border-color: #0ea5e9;
+            transform: translateX(-5px);
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 1.05em;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 8px;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .student-badge {
+            padding: 5px 11px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+
+        .badge-age {
+            background: #dbeafe;
+            color: #0369a1;
+        }
+
+        .badge-male {
+            background: #dbeafe;
+            color: #0284c7;
+        }
+
+        .badge-female {
+            background: #fce7f3;
+            color: #db2777;
+        }
+
+        .badge-kg-yes {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-kg-no {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            color: white;
+            font-size: 1em;
+        }
+
+        @media (max-width: 1024px) {
+            .chart-container {
+                height: 350px;
+            }
+
+            .chart-container.small {
+                height: 300px;
+            }
+
+            .students-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-panel {
+                width: 350px;
+                right: -350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .intro-text {
+                font-size: 1em;
+                padding: 25px;
+            }
+
+            .hadith-text {
+                font-size: 1.1em;
+            }
+
+            .kpi-value {
+                font-size: 2.8em;
+            }
+
+            header {
+                padding: 30px 20px;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .chart-container.small {
+                height: 280px;
+            }
+
+            .floating-buttons.left {
+                left: 20px;
+            }
+
+            .floating-buttons.right {
+                right: 20px;
+            }
+
+            .students-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .student-info {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+
+            .filter-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0284c7;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <div class="loading-text">جاري تحميل البيانات من Google Sheets...</div>
+    </div>
+
+    <div class="filter-overlay" id="filterOverlay"></div>
+
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-panel-header">
+            <div class="filter-panel-title">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 28px; height: 28px; fill: white;">
+                    <path d="M3 4.5H21M3 9H21M6 13.5H18M9 18H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                أدوات التصفية
+            </div>
+            <button class="close-panel-btn" id="closePanelBtn">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <div class="filter-panel-content">
+            <div class="filter-group">
+                <label for="ageFilter">العمر</label>
+                <select id="ageFilter">
+                    <option value="all">جميع الأعمار</option>
+                    <option value="1">1 سنة</option>
+                    <option value="2">2 سنوات</option>
+                    <option value="3">3 سنوات</option>
+                    <option value="4">4 سنوات</option>
+                    <option value="5">5 سنوات</option>
+                    <option value="6">6 سنوات</option>
+                    <option value="7">7 سنوات</option>
+                    <option value="8">8 سنوات</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="genderFilter">الجنس</label>
+                <select id="genderFilter">
+                    <option value="all">الجميع</option>
+                    <option value="ذكر">ذكر</option>
+                    <option value="أنثى">أنثى</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="kgFilter">الخبرة السابقة</label>
+                <select id="kgFilter">
+                    <option value="all">الجميع</option>
+                    <option value="true">دخل روضة سابقاً</option>
+                    <option value="false">لم يدخل روضة</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <svg class="header-decoration left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M47.1,-57.8C59.9,-45.7,68.4,-29.3,71.5,-11.7C74.6,5.9,72.3,24.7,63.3,39.9C54.3,55.1,38.6,66.6,21.3,71.3C4,76,-14.9,73.8,-31.2,66.3C-47.5,58.8,-61.2,46,-68.4,30.1C-75.6,14.2,-76.3,-4.8,-70.8,-21.3C-65.3,-37.8,-53.6,-51.8,-39.8,-63.6C-26,-75.4,-10.1,-84.9,4.3,-89.8C18.7,-94.7,34.3,-69.9,47.1,-57.8Z"/>
+            </svg>
+            <svg class="header-decoration right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M41.3,-52.3C54.2,-42.6,65.7,-29.3,70.4,-13.5C75.1,2.3,73,20.6,64.8,34.8C56.6,49,42.3,59.1,26.3,64.8C10.3,70.5,-7.4,71.8,-23.7,67.3C-40,62.8,-54.9,52.5,-64.3,38.4C-73.7,24.3,-77.6,6.4,-75.1,-10.5C-72.6,-27.4,-63.7,-43.3,-50.8,-53C-37.9,-62.7,-21,-66.2,-4.8,-60.6C11.4,-55,28.4,-62,41.3,-52.3Z"/>
+            </svg>
+            <h1>📊 دراسة جدوى روضة أطفال – الحي المستهدف</h1>
+            <div class="intro-text">
+                <div class="intro-paragraph">
+                    هذه اللوحة تستعرض بيانات أطفال هذا الحي ممن تتراوح أعمارهم ضمن سن الروضة، بهدف تقدير الحاجة الفعلية لافتتاح روضة تلبي حقّهم في التعلّم والرعاية المبكرة.
+                </div>
+                
+                <div class="hadith-box">
+                    <div class="hadith-intro">
+                        قال صلى الله عليه وسلم:
+                    </div>
+                    <div class="hadith-text">
+                        « كلكم راعٍ وكلكم مسؤول عن رعيته »
+                    </div>
+                    <div class="hadith-source">
+                        متفق عليه
+                    </div>
+                </div>
+
+                <div class="intro-conclusion">
+
+                    إن الاستثمار في تعليم الطفولة المبكرة هو استثمار مجتمعي راشد، يحقق النفع العام، ويهيّئ جيلاً مهذّبًا متعلّمًا، ويخفّف الأعباء عن الأسر، ويعز
