@@ -8,7 +8,7 @@ const CONFIG = {
     GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/12xt79hkAjkh3SpEjfwAQNeEDvdhtfna7VkEuL9yVj3A/gviz/tq?tqx=out:json',
     
     // استخدام البيانات المحلية (true) أو Google Sheets (false)
-    USE_LOCAL_DATA: true, // غيّرها إلى false عند الاستخدام الحقيقي
+    USE_LOCAL_DATA: false, // غيّرها إلى false عند الاستخدام الحقيقي
     
     // إعدادات الصفوف
     STUDENTS_PER_CLASS: 20,
