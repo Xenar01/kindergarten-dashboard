@@ -259,6 +259,28 @@
             animation: spin 1s linear infinite;
         }
         
+        .loading-animation {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .loading-animation i {
+            font-size: 3rem;
+            color: #4F46E5;
+            margin-bottom: 20px;
+        }
+
+        .loading-animation p {
+            font-size: 1.2rem;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .loading-animation small {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+        
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -531,268 +553,27 @@
     <script src="js/main.js"></script>
 
     <script>
-        // تحميل البيانات عند بدء التطبيق
-        document.addEventListener('DOMContentLoaded', function() {
-            // تحميل الإعدادات المحفوظة
-            loadConfigFromLocalStorage();
-            
-            // تطبيق المظهر
-            document.body.className = `theme-${CONFIG.THEME}`;
-            
-            // تحديث النصوص
-            document.getElementById('app-title').textContent = CONFIG.APP_TITLE;
-            document.getElementById('app-subtitle').textContent = CONFIG.APP_SUBTITLE;
-            
-            // تحميل البيانات
-            loadData();
-        });
-
-        // دالة تحميل البيانات
-        async function loadData() {
-            try {
-                // تحميل البيانات من Google Sheets حصرياً
-                const data = await loadFromGoogleSheets();
-                
-                if (data && data.length > 0) {
-                    // معالجة البيانات وعرضها
-                    processData(data);
-                    updateUI();
-                } else {
-                    throw new Error('لم يتم تحميل أي بيانات من Google Sheets');
-                }
-                
-            } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                // لا توجد بيانات احتياطية - يجب إصلاح المشكلة
-                handleDataLoadError(error);
-            }
-        }
-
-        // دالة معالجة خطأ تحميل البيانات
-        function handleDataLoadError(error) {
-            // إظهار رسالة خطأ شاملة
-            const loadingElement = document.getElementById('loading');
-            if (loadingElement) {
-                loadingElement.innerHTML = `
-                    <div class="error-state">
-                        <i class="fas fa-exclamation-triangle" style="color: #ef4444; font-size: 3rem; margin-bottom: 20px;"></i>
-                        <h3 style="color: #ef4444; margin-bottom: 15px;">تعذر تحميل البيانات</h3>
-                        <p style="margin-bottom: 20px; color: #6b7280;">النظام يتطلب الاتصال بـ Google Sheets لعرض البيانات</p>
-                        
-                        <div class="error-actions" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 20px 0;">
-                            <button onclick="location.reload()" class="btn btn-primary">
-                                <i class="fas fa-redo"></i>
-                                إعادة تحميل الصفحة
-                            </button>
-                            <button onclick="window.adminDashboard && window.adminDashboard.showLoginModal()" class="btn btn-secondary">
-                                <i class="fas fa-cog"></i>
-                                إعدادات المدير
-                            </button>
-                        </div>
-                        
-                        <div class="help-section" style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 8px; text-align: right;">
-                            <h4 style="color: #0369a1; margin-bottom: 15px;">خطوات حل المشكلة:</h4>
-                            <ol style="color: #075985; line-height: 1.8;">
-                                <li>تأكد من اتصالك بالإنترنت</li>
-                                <li>تحقق من أن رابط Google Sheets مكون بشكل صحيح في إعدادات المدير</li>
-                                <li>تأكد من أن الجدول مشارك للعامة</li>
-                                <li>أعد تحميل الصفحة للمحاولة مرة أخرى</li>
-                            </ol>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        // دالة معالجة البيانات
-        function processData(data) {
-            if (!data || data.length === 0) {
-                handleDataLoadError(new Error('لا توجد بيانات'));
-                return;
-            }
-            
-            window.childrenData = data;
-            
-            // حساب الإحصائيات
-            const totalChildren = data.length;
-            const ageRangeChildren = data.filter(child => 
-                child.age >= CONFIG.MIN_AGE && child.age <= CONFIG.MAX_AGE
-            ).length;
-            const outRangeChildren = totalChildren - ageRangeChildren;
-            const experiencedChildren = data.filter(child => 
-                child.previousKindergarten === 'نعم'
-            ).length;
-            
-            // تحديث الإحصائيات
-            document.getElementById('total-children').textContent = totalChildren;
-            document.getElementById('age-range-children').textContent = ageRangeChildren;
-            document.getElementById('out-range-children').textContent = outRangeChildren;
-            document.getElementById('experienced-children').textContent = experiencedChildren;
-            
-            // إنشاء الرسوم البيانية
-            createCharts(data);
-            
-            // ملء الجدول
-            populateTable(data);
-        }
-
-        // دالة تحديث الواجهة
-        function updateUI() {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('data-content').classList.remove('hidden');
-        }
-
-        // دالة إنشاء الرسوم البيانية
-        function createCharts(data) {
-            // رسم بياني للجنس
-            const genderData = data.reduce((acc, child) => {
-                acc[child.gender] = (acc[child.gender] || 0) + 1;
-                return acc;
-            }, {});
-
-            const genderChart = new Chart(document.getElementById('genderChart'), {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(genderData),
-                    datasets: [{
-                        data: Object.values(genderData),
-                        backgroundColor: [
-                            CONFIG.CHART_CONFIG.COLORS.PRIMARY,
-                            CONFIG.CHART_CONFIG.COLORS.SECONDARY
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: CONFIG.CHART_CONFIG.ANIMATION,
-                    plugins: {
-                        legend: {
-                            display: CONFIG.CHART_CONFIG.SHOW_LEGEND
-                        }
-                    }
-                }
-            });
-
-            // رسم بياني للعمر
-            const ageData = data.reduce((acc, child) => {
-                acc[child.age] = (acc[child.age] || 0) + 1;
-                return acc;
-            }, {});
-
-            const ageChart = new Chart(document.getElementById('ageChart'), {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(ageData).sort(),
-                    datasets: [{
-                        label: 'عدد الأطفال',
-                        data: Object.keys(ageData).sort().map(age => ageData[age]),
-                        backgroundColor: CONFIG.CHART_CONFIG.COLORS.INFO
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: CONFIG.CHART_CONFIG.ANIMATION,
-                    plugins: {
-                        legend: {
-                            display: CONFIG.CHART_CONFIG.SHOW_LEGEND
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        // دالة ملء الجدول
-        function populateTable(data) {
-            const tbody = document.getElementById('table-body');
-            tbody.innerHTML = '';
-
-            data.forEach(child => {
-                const row = document.createElement('tr');
-                
-                // تحديد ما إذا كان العمر خارج النطاق
-                const isOutOfRange = child.age < CONFIG.MIN_AGE || child.age > CONFIG.MAX_AGE;
-                if (isOutOfRange && CONFIG.SHOW_AGE_WARNINGS) {
-                    row.classList.add('age-warning');
-                }
-
-                row.innerHTML = `
-                    <td>${child.name}</td>
-                    <td>${child.age}</td>
-                    <td>${child.gender}</td>
-                    <td>${child.previousKindergarten}</td>
-                    <td>${child.fatherName}</td>
-                    <td>${child.phone}</td>
-                    <td>${isOutOfRange ? '<i class="fas fa-exclamation-triangle"></i> خارج النطاق' : '<i class="fas fa-check"></i> مناسب'}</td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-        }
-
-        // دالة عرض التنبيهات
+        // دوال مساعدة بسيطة للتوافق مع الإصدارات السابقة
+        
+        // دالة عرض التنبيهات (للتوافق مع الكود القديم)
         function showAlert(message, type) {
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.innerHTML = `
-                <i class="fas fa-info-circle"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(alert);
-            
-            setTimeout(() => {
-                alert.remove();
-            }, CONFIG.ALERTS_CONFIG.AUTO_HIDE_DELAY);
+            if (window.kindergartenApp) {
+                window.kindergartenApp.showAlert(message, type);
+            }
         }
 
-        // دوال التصدير (ستحتاج لمكتبات إضافية للتنفيذ الكامل)
-        document.getElementById('export-excel').addEventListener('click', function() {
-            showAlert('ميزة تصدير Excel قيد التطوير', 'info');
-        });
-
-        document.getElementById('export-pdf').addEventListener('click', function() {
-            showAlert('ميزة تصدير PDF قيد التطوير', 'info');
-        });
-
-        document.getElementById('export-csv').addEventListener('click', function() {
-            exportToCSV();
-        });
-
-        // دالة تصدير CSV
-        function exportToCSV() {
-            const data = window.childrenData;
-            
-            if (!data || data.length === 0) {
-                showAlert('لا توجد بيانات للتصدير. يرجى تحميل البيانات أولاً.', 'warning');
-                return;
+        // دالة تحميل البيانات (للتوافق مع admin.js)
+        async function loadData() {
+            if (window.kindergartenApp) {
+                await window.kindergartenApp.reloadData();
             }
-            
-            const csvContent = [
-                ['الاسم', 'العمر', 'الجنس', 'روضة سابقة', 'اسم الأب', 'رقم الهاتف'],
-                ...data.map(child => [
-                    child.name,
-                    child.age,
-                    child.gender,
-                    child.previousKindergarten,
-                    child.fatherName,
-                    child.phone
-                ])
-            ].map(row => row.join(',')).join('\n');
+        }
 
-            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `kindergarten-data-${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-            
-            showAlert('تم تصدير البيانات بنجاح', 'success');
+        // دالة تطبيق الإعدادات الجديدة (للتوافق مع admin.js)
+        function applyNewSettings() {
+            if (window.kindergartenApp) {
+                window.kindergartenApp.applyNewSettings();
+            }
         }
     </script>
 </body>

@@ -757,20 +757,24 @@ class AdminDashboard {
 
     // تطبيق الإعدادات
     applySettings() {
-        // تحديث عنوان الصفحة
-        document.title = this.currentConfig.APP_TITLE;
+        // تحديث الإعدادات العامة
+        Object.assign(CONFIG, this.currentConfig);
         
-        // تطبيق المظهر
-        document.body.className = `theme-${this.currentConfig.THEME}`;
+        // حفظ في التخزين المحلي
+        saveConfigToLocalStorage();
         
-        // إعادة تحميل البيانات إذا تغيرت الإعدادات
-        if (window.loadData) {
-            window.loadData();
+        // تطبيق الإعدادات الجديدة
+        if (window.kindergartenApp) {
+            window.kindergartenApp.applyNewSettings();
+        } else if (window.applyNewSettings) {
+            window.applyNewSettings();
         }
         
-        // إعادة رسم الرسوم البيانية
-        if (window.updateCharts) {
-            window.updateCharts();
+        // إعادة تحميل البيانات إذا تغير رابط Google Sheets
+        if (window.kindergartenApp) {
+            window.kindergartenApp.reloadData();
+        } else if (window.loadData) {
+            window.loadData();
         }
     }
 
