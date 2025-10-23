@@ -119,8 +119,8 @@ class KindergartenApp {
         this.filtersManager = new FiltersManager(() => this._handleFilterChange());
         this.filtersManager.initialize();
 
-        // لوحة الإدارة
-        this.adminPanel = new AdminPanel(CONFIG.ADMIN_PASSWORD, this.warningsData);
+        // لوحة الإدارة - تمرير جميع البيانات
+        this.adminPanel = new AdminPanel(CONFIG.ADMIN_PASSWORD, this.warningsData, this.allData);
         this.adminPanel.initialize();
     }
 

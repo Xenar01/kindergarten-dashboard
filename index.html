@@ -268,6 +268,94 @@
         </div>
     </div>
 
+    <!-- لوحة الإدارة الكاملة -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <div class="admin-dashboard-content">
+            <!-- رأس اللوحة -->
+            <div class="admin-dashboard-header">
+                <div class="admin-dashboard-title">
+                    👨‍💼 لوحة مدير النظام
+                </div>
+                <button class="admin-close-btn" id="adminCloseBtn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- محتوى اللوحة -->
+            <div class="admin-dashboard-body">
+                <!-- قسم التنبيهات -->
+                <div class="admin-section">
+                    <div class="admin-section-title">
+                        ⚠️ تنبيهات: أطفال خارج النطاق العمري
+                    </div>
+                    <div class="warning-cards" id="warningCardsAdmin"></div>
+                </div>
+
+                <!-- قسم جدول البيانات -->
+                <div class="admin-section">
+                    <div class="admin-section-title">
+                        📊 جميع البيانات المسجلة
+                    </div>
+                    
+                    <!-- حاوية الجدول -->
+                    <div class="data-table-container">
+                        <!-- أدوات التحكم -->
+                        <div class="table-controls">
+                            <div class="table-search">
+                                <input 
+                                    type="text" 
+                                    id="tableSearch" 
+                                    placeholder="🔍 ابحث بالاسم، رقم الهاتف، أو اسم الأب..."
+                                >
+                            </div>
+                            <div class="table-actions">
+                                <button class="table-btn table-btn-primary" id="exportBtn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M7 10L12 15M12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    تصدير Excel
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- الجدول -->
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th class="sortable" data-column="childName">الاسم</th>
+                                        <th class="sortable" data-column="age">العمر</th>
+                                        <th class="sortable" data-column="gender">الجنس</th>
+                                        <th class="sortable" data-column="prevKG">روضة سابقة</th>
+                                        <th class="sortable" data-column="fatherName">اسم الأب</th>
+                                        <th>رقم الهاتف</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataTableBody">
+                                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- التنقل بين الصفحات -->
+                        <div class="table-pagination">
+                            <div class="pagination-info" id="paginationInfo">
+                                عرض 1-10 من 42
+                            </div>
+                            <div class="pagination-controls">
+                                <button class="pagination-btn" id="paginationPrev">السابق</button>
+                                <button class="pagination-btn" id="paginationNext">التالي</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ملفات JavaScript بالترتيب - مع defer لتجنب مشاكل التحميل -->
     <script defer src="js/config.js"></script>
     <script defer src="js/data.js"></script>

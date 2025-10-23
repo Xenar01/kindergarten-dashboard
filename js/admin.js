@@ -1,10 +1,19 @@
 // ========== إدارة لوحة الإدارة ==========
 
 class AdminPanel {
-    constructor(password, warningsData) {
+    constructor(password, warningsData, allData) {
         this.password = password;
         this.warningsData = warningsData;
+        this.allData = allData; // جميع البيانات للجدول
         this.elements = {};
+        
+        // إعدادات الجدول
+        this.currentPage = 1;
+        this.rowsPerPage = 10;
+        this.sortColumn = null;
+        this.sortDirection = 'asc';
+        this.searchQuery = '';
+        this.filteredData = [];
     }
 
     /**
@@ -17,33 +26,27 @@ class AdminPanel {
     }
 
     /**
-     * عرض التنبيهات
+     * عرض لوحة الإدارة الكاملة
      */
-    displayWarnings() {
-        const warningCards = this.elements.warningCards;
-        if (!warningCards) return;
-
-        warningCards.innerHTML = '';
-
-        if (this.warningsData.length === 0) {
-            warningCards.innerHTML = this._getNoWarningsHTML();
-            this._showWarningsSection();
-            return;
-        }
-
-        this.warningsData.forEach(warning => {
-            const card = this._createWarningCard(warning);
-            warningCards.appendChild(card);
-        });
-
-        this._showWarningsSection();
+    displayDashboard() {
+        // عرض التنبيهات
+        this._displayWarnings();
+        
+        // عرض الجدول
+        this._displayDataTable();
+        
+        // فتح اللوحة
+        this._showDashboard();
+        
+        // التمرير للأعلى
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /**
-     * إخفاء التنبيهات
+     * إخفاء لوحة الإدارة
      */
-    hideWarnings() {
-        this.elements.warningsSection?.classList.remove('show');
+    hideDashboard() {
+        this.elements.adminDashboard?.classList.remove('active');
     }
 
     /**
@@ -65,6 +68,196 @@ class AdminPanel {
         this.elements.adminModal?.classList.remove('active');
     }
 
+    // ========== عرض التنبيهات ==========
+
+    /**
+     * عرض بطاقات التنبيهات
+     */
+    _displayWarnings() {
+        const warningCards = this.elements.warningCardsAdmin;
+        if (!warningCards) return;
+
+        warningCards.innerHTML = '';
+
+        if (this.warningsData.length === 0) {
+            warningCards.innerHTML = this._getNoWarningsHTML();
+            return;
+        }
+
+        this.warningsData.forEach(warning => {
+            const card = this._createWarningCard(warning);
+            warningCards.appendChild(card);
+        });
+    }
+
+    // ========== الجدول التفاعلي ==========
+
+    /**
+     * عرض جدول البيانات
+     */
+    _displayDataTable() {
+        this.filteredData = [...this.allData];
+        this._applySearch();
+        this._applySort();
+        this._renderTable();
+        this._renderPagination();
+    }
+
+    /**
+     * تطبيق البحث
+     */
+    _applySearch() {
+        if (!this.searchQuery) {
+            this.filteredData = [...this.allData];
+            return;
+        }
+
+        const query = this.searchQuery.toLowerCase();
+        this.filteredData = this.allData.filter(item => {
+            return (
+                item.childName.toLowerCase().includes(query) ||
+                item.fatherName.toLowerCase().includes(query) ||
+                item.phone.includes(query) ||
+                item.gender.includes(query)
+            );
+        });
+    }
+
+    /**
+     * تطبيق الفرز
+     */
+    _applySort() {
+        if (!this.sortColumn) return;
+
+        this.filteredData.sort((a, b) => {
+            let aVal = a[this.sortColumn];
+            let bVal = b[this.sortColumn];
+
+            // معالجة الأرقام
+            if (this.sortColumn === 'age') {
+                aVal = parseInt(aVal);
+                bVal = parseInt(bVal);
+            }
+
+            // معالجة القيم المنطقية
+            if (this.sortColumn === 'prevKG') {
+                aVal = aVal ? 1 : 0;
+                bVal = bVal ? 1 : 0;
+            }
+
+            if (aVal < bVal) return this.sortDirection === 'asc' ? -1 : 1;
+            if (aVal > bVal) return this.sortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+    }
+
+    /**
+     * رسم الجدول
+     */
+    _renderTable() {
+        const tbody = this.elements.dataTableBody;
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        if (this.filteredData.length === 0) {
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = `
+                <td colspan="6" class="table-empty">
+                    <div class="table-empty-icon">🔍</div>
+                    <div>لا توجد نتائج مطابقة للبحث</div>
+                </td>
+            `;
+            tbody.appendChild(emptyRow);
+            return;
+        }
+
+        // حساب الصفوف المعروضة
+        const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+        const endIndex = startIndex + this.rowsPerPage;
+        const pageData = this.filteredData.slice(startIndex, endIndex);
+
+        pageData.forEach((item, index) => {
+            const row = this._createTableRow(item, startIndex + index + 1);
+            tbody.appendChild(row);
+        });
+    }
+
+    /**
+     * إنشاء صف في الجدول
+     */
+    _createTableRow(item, number) {
+        const row = document.createElement('tr');
+        
+        const genderBadge = item.gender === 'ذكر' ? 'table-badge-male' : 'table-badge-female';
+        const kgBadge = item.prevKG ? 'table-badge-yes' : 'table-badge-no';
+        const kgText = item.prevKG ? 'نعم' : 'لا';
+
+        row.innerHTML = `
+            <td>${number}</td>
+            <td>${item.childName}</td>
+            <td>${item.age} سنوات</td>
+            <td><span class="table-badge ${genderBadge}">${item.gender}</span></td>
+            <td><span class="table-badge ${kgBadge}">${kgText}</span></td>
+            <td>${item.fatherName}</td>
+            <td class="table-phone">${item.phone}</td>
+        `;
+
+        return row;
+    }
+
+    /**
+     * رسم أزرار التنقل
+     */
+    _renderPagination() {
+        const totalPages = Math.ceil(this.filteredData.length / this.rowsPerPage);
+        
+        // تحديث المعلومات
+        const paginationInfo = this.elements.paginationInfo;
+        if (paginationInfo) {
+            const start = (this.currentPage - 1) * this.rowsPerPage + 1;
+            const end = Math.min(start + this.rowsPerPage - 1, this.filteredData.length);
+            paginationInfo.textContent = `عرض ${start}-${end} من ${this.filteredData.length}`;
+        }
+
+        // تحديث الأزرار
+        const prevBtn = this.elements.paginationPrev;
+        const nextBtn = this.elements.paginationNext;
+        
+        if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+        if (nextBtn) nextBtn.disabled = this.currentPage === totalPages || totalPages === 0;
+    }
+
+    /**
+     * تصدير البيانات إلى CSV
+     */
+    _exportToCSV() {
+        const headers = ['#', 'الاسم', 'العمر', 'الجنس', 'روضة سابقة', 'اسم الأب', 'رقم الهاتف'];
+        const rows = this.filteredData.map((item, index) => [
+            index + 1,
+            item.childName,
+            item.age,
+            item.gender,
+            item.prevKG ? 'نعم' : 'لا',
+            item.fatherName,
+            item.phone
+        ]);
+
+        // إنشاء CSV
+        let csv = '\uFEFF'; // BOM لدعم العربية
+        csv += headers.join(',') + '\n';
+        rows.forEach(row => {
+            csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+        });
+
+        // تحميل الملف
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `kindergarten-data-${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+    }
+
     // ========== دوال مساعدة خاصة ==========
 
     /**
@@ -72,15 +265,26 @@ class AdminPanel {
      */
     _cacheElements() {
         this.elements = {
+            // نافذة كلمة السر
             adminBtn: document.getElementById('adminBtn'),
             adminModal: document.getElementById('adminModal'),
             adminPassword: document.getElementById('adminPassword'),
             adminSubmit: document.getElementById('adminSubmit'),
             adminCancel: document.getElementById('adminCancel'),
             adminError: document.getElementById('adminError'),
-            warningsSection: document.getElementById('warningsSection'),
-            warningCards: document.getElementById('warningCards'),
-            closeWarningsBtn: document.getElementById('closeWarningsBtn')
+            
+            // لوحة الإدارة الكاملة
+            adminDashboard: document.getElementById('adminDashboard'),
+            adminCloseBtn: document.getElementById('adminCloseBtn'),
+            warningCardsAdmin: document.getElementById('warningCardsAdmin'),
+            
+            // الجدول
+            tableSearch: document.getElementById('tableSearch'),
+            exportBtn: document.getElementById('exportBtn'),
+            dataTableBody: document.getElementById('dataTableBody'),
+            paginationInfo: document.getElementById('paginationInfo'),
+            paginationPrev: document.getElementById('paginationPrev'),
+            paginationNext: document.getElementById('paginationNext')
         };
     }
 
@@ -101,8 +305,15 @@ class AdminPanel {
             }
         });
 
-        // زر إغلاق التنبيهات
-        this.elements.closeWarningsBtn?.addEventListener('click', () => this.hideWarnings());
+        // زر إغلاق اللوحة
+        this.elements.adminCloseBtn?.addEventListener('click', () => this.hideDashboard());
+
+        // إغلاق عند النقر خارج المحتوى
+        this.elements.adminDashboard?.addEventListener('click', (e) => {
+            if (e.target === this.elements.adminDashboard) {
+                this.hideDashboard();
+            }
+        });
 
         // زر الدخول
         this.elements.adminSubmit?.addEventListener('click', () => this._handleLogin());
@@ -112,6 +323,61 @@ class AdminPanel {
             if (e.key === 'Enter') {
                 this._handleLogin();
             }
+        });
+
+        // البحث في الجدول
+        this.elements.tableSearch?.addEventListener('input', (e) => {
+            this.searchQuery = e.target.value;
+            this.currentPage = 1;
+            this._applySearch();
+            this._applySort();
+            this._renderTable();
+            this._renderPagination();
+        });
+
+        // تصدير البيانات
+        this.elements.exportBtn?.addEventListener('click', () => this._exportToCSV());
+
+        // أزرار التنقل
+        this.elements.paginationPrev?.addEventListener('click', () => {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this._renderTable();
+                this._renderPagination();
+            }
+        });
+
+        this.elements.paginationNext?.addEventListener('click', () => {
+            const totalPages = Math.ceil(this.filteredData.length / this.rowsPerPage);
+            if (this.currentPage < totalPages) {
+                this.currentPage++;
+                this._renderTable();
+                this._renderPagination();
+            }
+        });
+
+        // الفرز عند النقر على عناوين الأعمدة
+        document.querySelectorAll('.data-table th.sortable').forEach(th => {
+            th.addEventListener('click', () => {
+                const column = th.dataset.column;
+                
+                if (this.sortColumn === column) {
+                    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    this.sortColumn = column;
+                    this.sortDirection = 'asc';
+                }
+
+                // تحديث UI
+                document.querySelectorAll('.data-table th').forEach(header => {
+                    header.classList.remove('sort-asc', 'sort-desc');
+                });
+                
+                th.classList.add(this.sortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+
+                this._applySort();
+                this._renderTable();
+            });
         });
 
         // تأثيرات hover
@@ -126,8 +392,7 @@ class AdminPanel {
 
         if (enteredPassword === this.password) {
             this.closeModal();
-            this.displayWarnings();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.displayDashboard();
         } else {
             this.elements.adminError.textContent = '❌ كلمة السر غير صحيحة';
             this.elements.adminPassword.value = '';
@@ -196,9 +461,9 @@ class AdminPanel {
     }
 
     /**
-     * إظهار قسم التنبيهات
+     * إظهار لوحة الإدارة
      */
-    _showWarningsSection() {
-        this.elements.warningsSection?.classList.add('show');
+    _showDashboard() {
+        this.elements.adminDashboard?.classList.add('active');
     }
 }
