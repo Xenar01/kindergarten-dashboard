@@ -54,7 +54,7 @@ class GoogleSheetsConnector {
         
         try {
             // التحقق من وجود رابط Google Sheets
-            if (!CONFIG.GOOGLE_SHEETS_URL || CONFIG.GOOGLE_SHEETS_URL === "https://docs.google.com/spreadsheets/d/your-sheet-id/edit#gid=0") {
+            if (!CONFIG.GOOGLE_SHEETS_URL || CONFIG.GOOGLE_SHEETS_URL === "https://docs.google.com/spreadsheets/d/12xt79hkAjkh3SpEjfwAQNeEDvdhtfna7VkEuL9yVj3A/edit#gid=0") {
                 throw new Error('لم يتم تكوين رابط Google Sheets. يرجى الاتصال بالمدير لتكوين الرابط.');
             }
 
