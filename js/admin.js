@@ -43,8 +43,32 @@ class AdminPanel {
         // فتح اللوحة
         this._showDashboard();
         
+        // إعادة ربط حدث البحث
+        this._reattachSearchListener();
+        
         // التمرير للأعلى
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    /**
+     * إعادة ربط مستمع حدث البحث
+     */
+    _reattachSearchListener() {
+        const searchInput = document.getElementById('tableSearch');
+        if (searchInput) {
+            // إزالة المستمع القديم وإضافة جديد
+            const newInput = searchInput.cloneNode(true);
+            searchInput.parentNode.replaceChild(newInput, searchInput);
+            
+            newInput.addEventListener('input', (e) => {
+                this.searchQuery = e.target.value;
+                this.currentPage = 1;
+                this._applySearch();
+                this._applySort();
+                this._renderTable();
+                this._renderPagination();
+            });
+        }
     }
 
     /**

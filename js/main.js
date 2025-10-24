@@ -61,7 +61,7 @@ class KindergartenApp {
     async _loadData() {
         if (CONFIG.USE_LOCAL_DATA) {
             console.log('📦 استخدام البيانات المحلية...');
-            this.allData = [...LOCAL_DATA];
+            this.allData = typeof LOCAL_DATA !== 'undefined' ? [...LOCAL_DATA] : [];
             return;
         }
 
@@ -73,8 +73,11 @@ class KindergartenApp {
         if (result.success) {
             this.allData = result.data;
         } else {
-            console.warn('⚠️ فشل تحميل البيانات من Google Sheets، استخدام البيانات المحلية...');
-            this.allData = [...LOCAL_DATA];
+            console.warn('⚠️ فشل تحميل البيانات من Google Sheets...');
+            this.allData = typeof LOCAL_DATA !== 'undefined' ? [...LOCAL_DATA] : [];
+            if (this.allData.length === 0) {
+                alert('فشل تحميل البيانات. يرجى التحقق من اتصال الإنترنت ورابط Google Sheets.');
+            }
         }
     }
 
