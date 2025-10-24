@@ -1646,48 +1646,55 @@ footer {
 
 /* أضف هذا في نهاية ملف css/styles.css */
 
-/* ========== تحسين الفلاتر Desktop فقط ========== */
+/* ========== تحسين الفلاتر للصفحة الرئيسية ========== */
 @media (min-width: 769px) {
     .table-controls-wrapper {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border: 1px solid #dee2e6;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        padding: 20px 24px;
     }
     
     .table-filters-top {
         display: flex;
-        gap: 16px;
+        gap: 12px;
         align-items: center;
+        flex-wrap: nowrap;
     }
     
     .filter-group-inline {
-        background: white;
-        padding: 10px 18px;
-        border-radius: 8px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-    }
-    
-    .filter-group-inline:hover {
-        box-shadow: 0 3px 10px rgba(2, 132, 199, 0.15);
-        transform: translateY(-2px);
+        gap: 8px;
     }
     
     .filter-group-inline label {
         font-weight: 600;
-        font-size: 14px;
-        min-width: fit-content;
+        font-size: 13px;
+        color: #374151;
     }
     
     .table-filter-select {
-        min-width: 140px;
-        border: 1.5px solid #ced4da;
-        padding: 8px 12px;
+        background: #f9fafb;
+        border: 1px solid #d1d5db;
+        padding: 7px 30px 7px 10px;
+        min-width: 110px;
+        font-size: 13px;
         font-weight: 500;
+        color: #374151;
     }
     
     .table-filter-select:hover {
+        background: #ffffff;
+        border-color: #0284c7;
+    }
+    
+    .table-filter-select:focus {
         border-color: #0284c7;
         box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+        background: #ffffff;
+    }
+    
+    .table-btn {
+        font-size: 13px;
+        padding: 8px 18px;
     }
 }
-
