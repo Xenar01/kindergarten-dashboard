@@ -1,248 +1,494 @@
-// ========== الملف الرئيسي للتطبيق ==========
-
+// الملف الرئيسي - Main Application Controller
 class KindergartenApp {
     constructor() {
-        // البيانات
-        this.allData = [];
-        this.childrenData = [];
-        this.warningsData = [];
+        this.data = [];
         this.filteredData = [];
-
-        // المديرون (Managers)
-        this.chartsManager = null;
-        this.filtersManager = null;
-        this.adminPanel = null;
-        this.sheetsLoader = null;
+        this.charts = {};
+        this.isInitialized = false;
     }
 
-    /**
-     * تهيئة التطبيق
-     */
+    // تهيئة التطبيق
     async initialize() {
         try {
-            console.log('🚀 بدء تهيئة التطبيق...');
-
+            console.log('بدء تهيئة التطبيق...');
+            
+            // تحميل الإعدادات المحفوظة
+            this.loadSavedConfig();
+            
+            // تطبيق المظهر
+            this.applyTheme();
+            
+            // تحديث النصوص
+            this.updateTexts();
+            
+            // ربط الأحداث
+            this.bindEvents();
+            
             // تحميل البيانات
-            await this._loadData();
-
-            // معالجة البيانات
-            this._processData();
-
-            // تهيئة المكونات
-            this._initializeComponents();
-
-            // إخفاء شاشة التحميل
-            this._hideLoadingScreen();
-
-            // عرض البيانات
-            this.updateDashboard();
-
-            console.log('✅ تم تهيئة التطبيق بنجاح');
+            await this.loadData();
+            
+            this.isInitialized = true;
+            console.log('تم تهيئة التطبيق بنجاح');
+            
         } catch (error) {
-            console.error('❌ خطأ في تهيئة التطبيق:', error);
-            this._showError('فشل في تهيئة التطبيق');
+            console.error('خطأ في تهيئة التطبيق:', error);
+            this.handleInitializationError(error);
         }
     }
 
-    /**
-     * تحديث لوحة البيانات
-     */
-    updateDashboard() {
-        this._updateKPIs();
-        this._updateCharts();
-        this._updateStudentsList();
+    // تحميل الإعدادات المحفوظة
+    loadSavedConfig() {
+        try {
+            const savedConfig = localStorage.getItem('kindergarten_config');
+            if (savedConfig) {
+                const parsedConfig = JSON.parse(savedConfig);
+                Object.assign(CONFIG, parsedConfig);
+                console.log('تم تحميل الإعدادات المحفوظة');
+            }
+        } catch (error) {
+            console.error('خطأ في تحميل الإعدادات:', error);
+        }
     }
 
-    // ========== تحميل البيانات ==========
+    // تطبيق المظهر
+    applyTheme() {
+        document.body.className = `theme-${CONFIG.THEME}`;
+    }
 
-    /**
-     * تحميل البيانات (محلية أو من Google Sheets)
-     */
-    async _loadData() {
-        if (CONFIG.USE_LOCAL_DATA) {
-            console.log('📦 استخدام البيانات المحلية...');
-            this.allData = [...LOCAL_DATA];
+    // تحديث النصوص
+    updateTexts() {
+        const titleElement = document.getElementById('app-title');
+        const subtitleElement = document.getElementById('app-subtitle');
+        
+        if (titleElement) titleElement.textContent = CONFIG.APP_TITLE;
+        if (subtitleElement) subtitleElement.textContent = CONFIG.APP_SUBTITLE;
+        
+        // تحديث عنوان الصفحة
+        document.title = CONFIG.APP_TITLE;
+    }
+
+    // ربط الأحداث
+    bindEvents() {
+        // أحداث التصفية
+        const genderFilter = document.getElementById('gender-filter');
+        const ageFilter = document.getElementById('age-filter');
+        const kindergartenFilter = document.getElementById('kindergarten-filter');
+        const searchInput = document.getElementById('search-input');
+
+        if (genderFilter) genderFilter.addEventListener('change', () => this.applyFilters());
+        if (ageFilter) ageFilter.addEventListener('change', () => this.applyFilters());
+        if (kindergartenFilter) kindergartenFilter.addEventListener('change', () => this.applyFilters());
+        if (searchInput) {
+            searchInput.addEventListener('input', this.debounce(() => this.applyFilters(), 300));
+        }
+
+        // أحداث التصدير
+        const exportExcel = document.getElementById('export-excel');
+        const exportPDF = document.getElementById('export-pdf');
+        const exportCSV = document.getElementById('export-csv');
+
+        if (exportExcel) exportExcel.addEventListener('click', () => this.exportData('excel'));
+        if (exportPDF) exportPDF.addEventListener('click', () => this.exportData('pdf'));
+        if (exportCSV) exportCSV.addEventListener('click', () => this.exportData('csv'));
+    }
+
+    // تحميل البيانات
+    async loadData() {
+        try {
+            console.log('بدء تحميل البيانات...');
+            
+            // التحقق من وجود رابط Google Sheets
+            if (!CONFIG.GOOGLE_SHEETS_URL || CONFIG.GOOGLE_SHEETS_URL === "https://docs.google.com/spreadsheets/d/your-sheet-id/edit#gid=0") {
+                throw new Error('لم يتم تكوين رابط Google Sheets');
+            }
+            
+            // تحميل البيانات
+            const rawData = await loadFromGoogleSheets();
+            
+            if (!rawData || rawData.length === 0) {
+                throw new Error('لا توجد بيانات في الجدول');
+            }
+            
+            // تنظيف وتنسيق البيانات
+            this.data = DataHandler.sanitizeData(rawData);
+            
+            if (this.data.length === 0) {
+                throw new Error('لا توجد سجلات صحيحة في البيانات');
+            }
+            
+            // معالجة البيانات وعرضها
+            this.processData();
+            this.showInterface();
+            
+            console.log(`تم تحميل ${this.data.length} سجل بنجاح`);
+            
+        } catch (error) {
+            console.error('خطأ في تحميل البيانات:', error);
+            this.handleDataError(error);
+        }
+    }
+
+    // معالجة البيانات
+    processData() {
+        if (!this.data || this.data.length === 0) {
             return;
         }
 
-        console.log('🌐 تحميل البيانات من Google Sheets...');
-        this.sheetsLoader = new GoogleSheetsLoader(CONFIG.GOOGLE_SHEETS_URL);
-        
-        const result = await this.sheetsLoader.loadData();
+        // حساب الإحصائيات
+        const stats = DataHandler.calculateStatistics(this.data);
+        this.updateStatistics(stats);
 
-        if (result.success) {
-            this.allData = result.data;
-        } else {
-            console.warn('⚠️ فشل تحميل البيانات من Google Sheets، استخدام البيانات المحلية...');
-            this.allData = [...LOCAL_DATA];
-        }
+        // إنشاء الرسوم البيانية
+        this.createCharts(stats);
+
+        // ملء الجدول
+        this.filteredData = [...this.data];
+        this.updateTable();
     }
 
-    /**
-     * معالجة البيانات وفصلها
-     */
-    _processData() {
-        this.childrenData = [];
-        this.warningsData = [];
+    // تحديث الإحصائيات
+    updateStatistics(stats) {
+        const elements = {
+            'total-children': stats.total,
+            'age-range-children': stats.inRange,
+            'out-range-children': stats.outOfRange,
+            'experienced-children': stats.experienced
+        };
 
-        this.allData.forEach(child => {
-            if (child.age >= CONFIG.MIN_AGE && child.age <= CONFIG.MAX_AGE) {
-                // أطفال ضمن النطاق المقبول
-                this.childrenData.push({
-                    name: child.childName,
-                    age: child.age,
-                    gender: child.gender,
-                    prevKG: child.prevKG
-                });
-            } else {
-                // أطفال خارج النطاق
-                this.warningsData.push(child);
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
             }
         });
-
-        this.filteredData = [...this.childrenData];
-        console.log(`✅ تم معالجة ${this.childrenData.length} طفل ضمن النطاق`);
-        console.log(`⚠️ تم العثور على ${this.warningsData.length} طفل خارج النطاق`);
     }
 
-    // ========== تهيئة المكونات ==========
-
-    /**
-     * تهيئة جميع المكونات
-     */
-    _initializeComponents() {
-        // الرسوم البيانية
-        this.chartsManager = new ChartsManager();
-        this.chartsManager.initializeAll();
-
-        // التصفية
-        this.filtersManager = new FiltersManager(() => this._handleFilterChange());
-        this.filtersManager.initialize();
-
-        // لوحة الإدارة - تمرير جميع البيانات
-        this.adminPanel = new AdminPanel(CONFIG.ADMIN_PASSWORD, this.warningsData, this.allData);
-        this.adminPanel.initialize();
+    // إنشاء الرسوم البيانية
+    createCharts(stats) {
+        // رسم بياني للجنس
+        this.createGenderChart(stats.genderDistribution);
+        
+        // رسم بياني للعمر
+        this.createAgeChart(stats.ageDistribution);
     }
 
-    /**
-     * معالجة تغيير الفلتر
-     */
-    _handleFilterChange() {
-        this.filteredData = this.filtersManager.applyFilters(this.childrenData);
-        this.updateDashboard();
-    }
+    // رسم بياني للجنس
+    createGenderChart(genderData) {
+        const ctx = document.getElementById('genderChart');
+        if (!ctx) return;
 
-    // ========== تحديث الواجهة ==========
-
-    /**
-     * تحديث مؤشرات الأداء (KPIs)
-     */
-    _updateKPIs() {
-        const total = this.filteredData.length;
-        const avgAge = total > 0 
-            ? (this.filteredData.reduce((sum, child) => sum + child.age, 0) / total).toFixed(1) 
-            : 0;
-        const classrooms = Math.ceil(total / CONFIG.STUDENTS_PER_CLASS);
-        const teachers = classrooms;
-
-        this._setElementText('totalChildren', total);
-        this._setElementText('avgAge', avgAge);
-        this._setElementText('classrooms', classrooms);
-        this._setElementText('teachers', teachers);
-    }
-
-    /**
-     * تحديث الرسوم البيانية
-     */
-    _updateCharts() {
-        if (this.chartsManager) {
-            this.chartsManager.updateAll(this.filteredData);
+        // تدمير الرسم البياني السابق إذا وجد
+        if (this.charts.gender) {
+            this.charts.gender.destroy();
         }
+
+        this.charts.gender = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(genderData),
+                datasets: [{
+                    data: Object.values(genderData),
+                    backgroundColor: [
+                        CONFIG.CHART_CONFIG.COLORS.PRIMARY,
+                        CONFIG.CHART_CONFIG.COLORS.SECONDARY
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: CONFIG.CHART_CONFIG.ANIMATION,
+                plugins: {
+                    legend: {
+                        display: CONFIG.CHART_CONFIG.SHOW_LEGEND,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
     }
 
-    /**
-     * تحديث قائمة الطلاب
-     */
-    _updateStudentsList() {
-        const container = document.getElementById('studentsList');
-        if (!container) return;
+    // رسم بياني للعمر
+    createAgeChart(ageData) {
+        const ctx = document.getElementById('ageChart');
+        if (!ctx) return;
 
-        container.innerHTML = '';
+        // تدمير الرسم البياني السابق إذا وجد
+        if (this.charts.age) {
+            this.charts.age.destroy();
+        }
+
+        const sortedAges = Object.keys(ageData).sort((a, b) => parseInt(a) - parseInt(b));
+
+        this.charts.age = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sortedAges.map(age => `${age} سنوات`),
+                datasets: [{
+                    label: 'عدد الأطفال',
+                    data: sortedAges.map(age => ageData[age]),
+                    backgroundColor: CONFIG.CHART_CONFIG.COLORS.INFO
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: CONFIG.CHART_CONFIG.ANIMATION,
+                plugins: {
+                    legend: {
+                        display: CONFIG.CHART_CONFIG.SHOW_LEGEND
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // تطبيق التصفية
+    applyFilters() {
+        if (!this.data || this.data.length === 0) {
+            return;
+        }
+
+        const filters = {
+            gender: document.getElementById('gender-filter')?.value || '',
+            age: document.getElementById('age-filter')?.value || '',
+            previousKindergarten: document.getElementById('kindergarten-filter')?.value || '',
+            search: document.getElementById('search-input')?.value || ''
+        };
+
+        this.filteredData = DataHandler.filterData(this.data, filters);
+        this.updateTable();
+    }
+
+    // تحديث الجدول
+    updateTable() {
+        const tbody = document.getElementById('table-body');
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        if (!this.filteredData || this.filteredData.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #6B7280;">لا توجد نتائج مطابقة للتصفية</td></tr>';
+            return;
+        }
 
         this.filteredData.forEach(child => {
-            const item = this._createStudentItem(child);
-            container.appendChild(item);
-        });
+            const row = document.createElement('tr');
+            
+            // تحديد ما إذا كان العمر خارج النطاق
+            const isOutOfRange = child.age < CONFIG.MIN_AGE || child.age > CONFIG.MAX_AGE;
+            if (isOutOfRange && CONFIG.SHOW_AGE_WARNINGS) {
+                row.classList.add('age-warning');
+            }
 
-        this._setElementText('listCount', this.filteredData.length);
+            row.innerHTML = `
+                <td>${child.name}</td>
+                <td>${child.age}</td>
+                <td>${child.gender}</td>
+                <td>${child.previousKindergarten}</td>
+                <td>${child.fatherName}</td>
+                <td>${child.phone}</td>
+                <td>${isOutOfRange ? '<i class="fas fa-exclamation-triangle"></i> خارج النطاق' : '<i class="fas fa-check"></i> مناسب'}</td>
+            `;
+            
+            tbody.appendChild(row);
+        });
     }
 
-    /**
-     * إنشاء عنصر طالب
-     */
-    _createStudentItem(child) {
-        const item = document.createElement('div');
-        item.className = 'student-item';
+    // عرض الواجهة
+    showInterface() {
+        const loading = document.getElementById('loading');
+        const dataContent = document.getElementById('data-content');
+        
+        if (loading) loading.classList.add('hidden');
+        if (dataContent) dataContent.classList.remove('hidden');
+    }
 
-        const genderBadgeClass = child.gender === 'ذكر' ? 'badge-male' : 'badge-female';
-        const kgBadgeClass = child.prevKG ? 'badge-kg-yes' : 'badge-kg-no';
-        const kgText = child.prevKG ? 'روضة سابقة' : 'جديد';
+    // معالجة خطأ البيانات
+    handleDataError(error) {
+        this.showDefaultInterface();
+        this.showConnectionError(error);
+    }
 
-        item.innerHTML = `
-            <div class="student-name">${child.name}</div>
-            <div class="student-info">
-                <span class="student-badge badge-age">${child.age} سنوات</span>
-                <span class="student-badge ${genderBadgeClass}">${child.gender}</span>
-                <span class="student-badge ${kgBadgeClass}">${kgText}</span>
+    // معالجة خطأ التهيئة
+    handleInitializationError(error) {
+        console.error('فشل في تهيئة التطبيق:', error);
+        this.showAlert('فشل في تهيئة التطبيق. يرجى إعادة تحميل الصفحة.', 'error');
+    }
+
+    // عرض الواجهة الافتراضية
+    showDefaultInterface() {
+        this.showInterface();
+        
+        // إعادة تعيين الإحصائيات
+        const statElements = ['total-children', 'age-range-children', 'out-range-children', 'experienced-children'];
+        statElements.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.textContent = '0';
+        });
+        
+        // إفراغ الجدول
+        const tbody = document.getElementById('table-body');
+        if (tbody) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #6B7280;">لا توجد بيانات للعرض</td></tr>';
+        }
+    }
+
+    // عرض خطأ الاتصال
+    showConnectionError(error) {
+        const container = document.querySelector('.container');
+        const header = document.querySelector('.header');
+        
+        if (!container || !header) return;
+        
+        // إزالة رسائل الخطأ السابقة
+        const existingErrors = container.querySelectorAll('.connection-error');
+        existingErrors.forEach(el => el.remove());
+        
+        const errorHTML = `
+            <div class="connection-error alert alert-warning" style="margin: 20px 0; position: relative; top: auto; left: auto; transform: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>تعذر تحميل البيانات: ${error.message}</span>
+            </div>
+            <div class="connection-error" style="text-align: center; margin: 20px 0;">
+                <button onclick="location.reload()" class="btn btn-primary" style="margin: 5px;">
+                    <i class="fas fa-redo"></i> إعادة المحاولة
+                </button>
+                <button onclick="window.adminDashboard && window.adminDashboard.showLoginModal()" class="btn btn-secondary" style="margin: 5px;">
+                    <i class="fas fa-cog"></i> الإعدادات
+                </button>
             </div>
         `;
-
-        return item;
+        
+        const errorContainer = document.createElement('div');
+        errorContainer.innerHTML = errorHTML;
+        container.insertBefore(errorContainer, header.nextSibling);
     }
 
-    // ========== دوال مساعدة ==========
+    // تصدير البيانات
+    exportData(format) {
+        try {
+            const dataToExport = this.filteredData.length > 0 ? this.filteredData : this.data;
+            
+            if (!dataToExport || dataToExport.length === 0) {
+                this.showAlert('لا توجد بيانات للتصدير', 'warning');
+                return;
+            }
 
-    /**
-     * إخفاء شاشة التحميل
-     */
-    _hideLoadingScreen() {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
+            switch (format) {
+                case 'csv':
+                    DataHandler.exportToCSV(dataToExport);
+                    this.showAlert('تم تصدير البيانات بصيغة CSV بنجاح', 'success');
+                    break;
+                case 'excel':
+                    this.showAlert('ميزة تصدير Excel قيد التطوير', 'info');
+                    break;
+                case 'pdf':
+                    this.showAlert('ميزة تصدير PDF قيد التطوير', 'info');
+                    break;
+                default:
+                    this.showAlert('صيغة تصدير غير مدعومة', 'error');
+            }
+        } catch (error) {
+            console.error('خطأ في التصدير:', error);
+            this.showAlert('فشل في تصدير البيانات', 'error');
         }
     }
 
-    /**
-     * عرض رسالة خطأ
-     */
-    _showError(message) {
-        alert(message);
-        this._hideLoadingScreen();
+    // عرض التنبيهات
+    showAlert(message, type) {
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.style.position = 'fixed';
+        alert.style.top = '20px';
+        alert.style.left = '50%';
+        alert.style.transform = 'translateX(-50%)';
+        alert.style.zIndex = '10000';
+        alert.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+            <button class="alert-close">&times;</button>
+        `;
+        
+        document.body.appendChild(alert);
+        
+        // إخفاء التنبيه تلقائياً
+        setTimeout(() => {
+            if (alert.parentNode) {
+                alert.remove();
+            }
+        }, CONFIG.ALERTS_CONFIG.AUTO_HIDE_DELAY);
+        
+        // إضافة حدث الإغلاق اليدوي
+        alert.querySelector('.alert-close').addEventListener('click', () => {
+            alert.remove();
+        });
     }
 
-    /**
-     * تعيين نص لعنصر
-     */
-    _setElementText(id, text) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = text;
+    // دالة مساعدة لتأخير التنفيذ
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // إعادة تحميل البيانات
+    async reloadData() {
+        this.data = [];
+        this.filteredData = [];
+        await this.loadData();
+    }
+
+    // تطبيق الإعدادات الجديدة
+    applyNewSettings() {
+        this.applyTheme();
+        this.updateTexts();
+        
+        if (this.data.length > 0) {
+            this.processData();
         }
     }
 }
 
-// ========== تهيئة التطبيق عند تحميل الصفحة ==========
-
+// إنشاء مثيل التطبيق وتهيئته عند تحميل الصفحة
 let app;
 
-function initApp() {
-    app = new KindergartenApp();
-    app.initialize();
-}
-
-// التأكد من تحميل DOM قبل التشغيل
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-} else {
-    initApp();
-}
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        app = new KindergartenApp();
+        await app.initialize();
+        
+        // ربط التطبيق بالنافذة للوصول العام
+        window.kindergartenApp = app;
+        
+    } catch (error) {
+        console.error('فشل في بدء التطبيق:', error);
+        
+        // عرض رسالة خطأ عامة
+        const container = document.querySelector('.container');
+        if (container) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 50px; color: #ef4444;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                    <h2>فشل في تحميل التطبيق</h2>
+                    <p>حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة.</p>
+                    <button onclick="location.reload()" class="btn btn-primary">إعادة تحميل</button>
+                </div>
+            `;
+        }
+    }
+});

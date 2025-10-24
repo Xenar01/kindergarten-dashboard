@@ -1,53 +1,189 @@
-// ========== البيانات المحلية للاختبار ==========
+// ملف البيانات - Data Handler
+// هذا الملف يحتوي على دوال معالجة البيانات المساعدة
 
-const LOCAL_DATA = [
-    {childName: "مطرة", age: 5, gender: "أنثى", prevKG: false, fatherName: "أحمد الرشيد", phone: "997196942"},
-    {childName: "نضال", age: 4, gender: "ذكر", prevKG: false, fatherName: "احمد العمر", phone: "997733923"},
-    {childName: "فايز عباس", age: 4, gender: "ذكر", prevKG: false, fatherName: "عبد الجبار فايز", phone: "998562648"},
-    {childName: "فاطمة", age: 4, gender: "أنثى", prevKG: false, fatherName: "محمد السعيد", phone: "996711823"},
-    {childName: "حيدر", age: 3, gender: "ذكر", prevKG: false, fatherName: "علي حسن", phone: "995234567"},
-    {childName: "خطاب", age: 5, gender: "ذكر", prevKG: false, fatherName: "سعيد خطاب", phone: "994567890"},
-    {childName: "فاروق", age: 3, gender: "ذكر", prevKG: false, fatherName: "عمر فاروق", phone: "993456789"},
-    {childName: "مرشد", age: 4, gender: "ذكر", prevKG: false, fatherName: "يوسف مرشد", phone: "992345678"},
-    {childName: "ألين القدور", age: 4, gender: "أنثى", prevKG: true, fatherName: "خالد القدور", phone: "991234567"},
-    {childName: "شروق", age: 5, gender: "أنثى", prevKG: true, fatherName: "أحمد شروق", phone: "990123456"},
-    {childName: "يزن", age: 3, gender: "ذكر", prevKG: false, fatherName: "محمود يزن", phone: "999876543"},
-    {childName: "بهاء الدين", age: 5, gender: "ذكر", prevKG: false, fatherName: "عبدالله بهاء", phone: "998765432"},
-    {childName: "أروى", age: 3, gender: "أنثى", prevKG: false, fatherName: "سامي أروى", phone: "997654321"},
-    {childName: "إبراهيم", age: 5, gender: "ذكر", prevKG: false, fatherName: "حسن إبراهيم", phone: "996543210"},
-    {childName: "خطاب", age: 5, gender: "ذكر", prevKG: false, fatherName: "فهد خطاب", phone: "995432109"},
-    {childName: "حمزة", age: 5, gender: "ذكر", prevKG: true, fatherName: "طارق حمزة", phone: "994321098"},
-    {childName: "عائشة", age: 4, gender: "أنثى", prevKG: false, fatherName: "عمر عائشة", phone: "993210987"},
-    {childName: "نوال", age: 4, gender: "أنثى", prevKG: true, fatherName: "سعد نوال", phone: "992109876"},
-    {childName: "محمد مروان", age: 3, gender: "ذكر", prevKG: false, fatherName: "مروان أحمد", phone: "991098765"},
-    {childName: "صهيب الخطيب", age: 5, gender: "ذكر", prevKG: false, fatherName: "خالد الخطيب", phone: "990987654"},
-    {childName: "غصون شيخة", age: 5, gender: "أنثى", prevKG: false, fatherName: "محمد شيخة", phone: "999765432"},
-    {childName: "ايمان", age: 5, gender: "أنثى", prevKG: false, fatherName: "عبدالرحمن ايمان", phone: "998654321"},
-    {childName: "جنى الحنيني", age: 5, gender: "أنثى", prevKG: false, fatherName: "أحمد الحنيني", phone: "997543210"},
-    {childName: "رحمة", age: 5, gender: "أنثى", prevKG: true, fatherName: "يوسف رحمة", phone: "996432109"},
-    {childName: "محمد عبدو", age: 3, gender: "ذكر", prevKG: false, fatherName: "عبدو محمد", phone: "995321098"},
-    {childName: "أنس", age: 5, gender: "ذكر", prevKG: false, fatherName: "سامي أنس", phone: "994210987"},
-    {childName: "سلمى عمار الشبيب", age: 4, gender: "أنثى", prevKG: false, fatherName: "عمار الشبيب", phone: "993109876"},
-    {childName: "لؤي عرعور", age: 3, gender: "ذكر", prevKG: false, fatherName: "فهد عرعور", phone: "992098765"},
-    {childName: "خالد الأحمد", age: 5, gender: "ذكر", prevKG: false, fatherName: "علي الأحمد", phone: "991987654"},
-    {childName: "نور الأحمد", age: 3, gender: "أنثى", prevKG: false, fatherName: "علي الأحمد", phone: "991987654"},
-    {childName: "اسلام", age: 5, gender: "أنثى", prevKG: false, fatherName: "محمود اسلام", phone: "990876543"},
-    {childName: "احمد", age: 4, gender: "ذكر", prevKG: false, fatherName: "خالد احمد", phone: "999654321"},
-    {childName: "رنيم", age: 4, gender: "أنثى", prevKG: true, fatherName: "سعيد رنيم", phone: "998543210"},
-    {childName: "وتين", age: 5, gender: "أنثى", prevKG: false, fatherName: "عمر وتين", phone: "997432109"},
-    {childName: "يقين", age: 4, gender: "أنثى", prevKG: false, fatherName: "طارق يقين", phone: "996321098"},
-    {childName: "هناء", age: 4, gender: "أنثى", prevKG: false, fatherName: "حسن هناء", phone: "995210987"},
-    {childName: "عمار السليمان", age: 4, gender: "ذكر", prevKG: false, fatherName: "محمد السليمان", phone: "994109876"},
-    {childName: "فاطمة النابو", age: 4, gender: "أنثى", prevKG: false, fatherName: "أحمد النابو", phone: "993098765"},
-    {childName: "انس", age: 4, gender: "ذكر", prevKG: true, fatherName: "يوسف انس", phone: "992987654"},
-    {childName: "عمر فتح الله", age: 3, gender: "ذكر", prevKG: false, fatherName: "سامي فتح الله", phone: "991876543"},
-    {childName: "سيدرا علوش", age: 5, gender: "أنثى", prevKG: false, fatherName: "علي علوش", phone: "990765432"},
-    {childName: "مصطفى علوش", age: 4, gender: "ذكر", prevKG: false, fatherName: "علي علوش", phone: "990765432"},
-    // أطفال خارج النطاق (للتجربة)
-    {childName: "طه خلف", age: 20, gender: "ذكر", prevKG: false, fatherName: "خلف الدين", phone: "997123456"},
-    {childName: "سيدرا الجمال", age: 7, gender: "أنثى", prevKG: false, fatherName: "محمد الجمال", phone: "996234567"},
-    {childName: "تسنيم الجمال", age: 7, gender: "أنثى", prevKG: false, fatherName: "محمد الجمال", phone: "996234567"},
-    {childName: "عماد", age: 2, gender: "ذكر", prevKG: false, fatherName: "عبد الهادي رحيم", phone: "995345678"},
-    {childName: "ريّان الدياب", age: 2, gender: "ذكر", prevKG: false, fatherName: "أحمد الدياب", phone: "994456789"},
-    {childName: "خديجه", age: 9, gender: "أنثى", prevKG: false, fatherName: "سعيد خديجة", phone: "993567890"}
-];
+// دالة تنظيف وتنسيق البيانات
+function sanitizeData(data) {
+    if (!data || !Array.isArray(data)) {
+        return [];
+    }
+    
+    return data.map(item => ({
+        name: String(item.name || '').trim(),
+        age: parseInt(item.age) || 0,
+        gender: String(item.gender || '').trim(),
+        previousKindergarten: String(item.previousKindergarten || '').trim(),
+        fatherName: String(item.fatherName || '').trim(),
+        phone: String(item.phone || '').trim()
+    })).filter(item => item.name && item.age > 0);
+}
+
+// دالة التحقق من صحة البيانات
+function validateDataStructure(data) {
+    if (!data || !Array.isArray(data)) {
+        throw new Error('البيانات يجب أن تكون في شكل مصفوفة');
+    }
+    
+    if (data.length === 0) {
+        throw new Error('لا توجد سجلات في البيانات');
+    }
+    
+    const requiredFields = ['name', 'age', 'gender', 'previousKindergarten', 'fatherName', 'phone'];
+    const firstRecord = data[0];
+    
+    for (const field of requiredFields) {
+        if (!(field in firstRecord)) {
+            throw new Error(`الحقل المطلوب "${field}" مفقود في البيانات`);
+        }
+    }
+    
+    return true;
+}
+
+// دالة حساب الإحصائيات
+function calculateStatistics(data) {
+    if (!data || data.length === 0) {
+        return {
+            total: 0,
+            inRange: 0,
+            outOfRange: 0,
+            experienced: 0,
+            genderDistribution: {},
+            ageDistribution: {}
+        };
+    }
+    
+    const stats = {
+        total: data.length,
+        inRange: 0,
+        outOfRange: 0,
+        experienced: 0,
+        genderDistribution: {},
+        ageDistribution: {}
+    };
+    
+    data.forEach(child => {
+        // حساب النطاق العمري
+        if (child.age >= CONFIG.MIN_AGE && child.age <= CONFIG.MAX_AGE) {
+            stats.inRange++;
+        } else {
+            stats.outOfRange++;
+        }
+        
+        // حساب الخبرة السابقة
+        if (child.previousKindergarten === 'نعم') {
+            stats.experienced++;
+        }
+        
+        // توزيع الجنس
+        stats.genderDistribution[child.gender] = (stats.genderDistribution[child.gender] || 0) + 1;
+        
+        // توزيع العمر
+        stats.ageDistribution[child.age] = (stats.ageDistribution[child.age] || 0) + 1;
+    });
+    
+    return stats;
+}
+
+// دالة تصفية البيانات
+function filterData(data, filters = {}) {
+    if (!data || data.length === 0) {
+        return [];
+    }
+    
+    return data.filter(child => {
+        // تصفية الجنس
+        if (filters.gender && child.gender !== filters.gender) {
+            return false;
+        }
+        
+        // تصفية العمر
+        if (filters.age && child.age !== parseInt(filters.age)) {
+            return false;
+        }
+        
+        // تصفية الروضة السابقة
+        if (filters.previousKindergarten && child.previousKindergarten !== filters.previousKindergarten) {
+            return false;
+        }
+        
+        // البحث في الأسماء
+        if (filters.search) {
+            const searchTerm = filters.search.toLowerCase();
+            if (!child.name.toLowerCase().includes(searchTerm)) {
+                return false;
+            }
+        }
+        
+        return true;
+    });
+}
+
+// دالة ترتيب البيانات
+function sortData(data, sortField = 'name', order = 'asc') {
+    if (!data || data.length === 0) {
+        return [];
+    }
+    
+    return [...data].sort((a, b) => {
+        let aValue = a[sortField];
+        let bValue = b[sortField];
+        
+        // تحويل للأرقام إذا كان الحقل رقمي
+        if (sortField === 'age') {
+            aValue = parseInt(aValue) || 0;
+            bValue = parseInt(bValue) || 0;
+        } else {
+            // تحويل للنص
+            aValue = String(aValue).toLowerCase();
+            bValue = String(bValue).toLowerCase();
+        }
+        
+        if (order === 'desc') {
+            return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+        } else {
+            return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+        }
+    });
+}
+
+// دالة تصدير البيانات لـ CSV
+function exportToCSV(data, filename = 'kindergarten-data') {
+    if (!data || data.length === 0) {
+        throw new Error('لا توجد بيانات للتصدير');
+    }
+    
+    const headers = ['الاسم', 'العمر', 'الجنس', 'روضة سابقة', 'اسم الأب', 'رقم الهاتف'];
+    const csvContent = [
+        headers,
+        ...data.map(child => [
+            child.name,
+            child.age,
+            child.gender,
+            child.previousKindergarten,
+            child.fatherName,
+            child.phone
+        ])
+    ].map(row => row.join(',')).join('\n');
+
+    // إضافة BOM لدعم UTF-8
+    const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${filename}-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+}
+
+// تصدير الدوال للاستخدام العام
+if (typeof window !== 'undefined') {
+    window.DataHandler = {
+        sanitizeData,
+        validateDataStructure,
+        calculateStatistics,
+        filterData,
+        sortData,
+        exportToCSV
+    };
+}
