@@ -71,6 +71,8 @@ class FiltersManager {
             filterPanel: document.getElementById('filterPanel'),
             filterOverlay: document.getElementById('filterOverlay'),
             closePanelBtn: document.getElementById('closePanelBtn'),
+            applyFilterBtn: document.getElementById('applyFilterBtn'),
+            cancelFilterBtn: document.getElementById('cancelFilterBtn'),
             ageFilter: document.getElementById('ageFilter'),
             genderFilter: document.getElementById('genderFilter'),
             kgFilter: document.getElementById('kgFilter')
@@ -90,20 +92,31 @@ class FiltersManager {
         // النقر خارج اللوحة
         this.elements.filterOverlay?.addEventListener('click', () => this.closePanel());
         
+        // زر تطبيق التصفية
+        this.elements.applyFilterBtn?.addEventListener('click', () => {
+            if (this.onFilterChange) this.onFilterChange();
+            this.closePanel();
+        });
+        
+        // زر إلغاء التصفية
+        this.elements.cancelFilterBtn?.addEventListener('click', () => {
+            this.closePanel();
+        });
+        
         // زر إعادة التعيين
         this.elements.resetBtn?.addEventListener('click', () => this.resetFilters());
         
         // تغيير الفلاتر
         this.elements.ageFilter?.addEventListener('change', () => {
-            if (this.onFilterChange) this.onFilterChange();
+            // التطبيق التلقائي معطل - سيتم التطبيق عند الضغط على زر "تطبيق"
         });
         
         this.elements.genderFilter?.addEventListener('change', () => {
-            if (this.onFilterChange) this.onFilterChange();
+            // التطبيق التلقائي معطل - سيتم التطبيق عند الضغط على زر "تطبيق"
         });
         
         this.elements.kgFilter?.addEventListener('change', () => {
-            if (this.onFilterChange) this.onFilterChange();
+            // التطبيق التلقائي معطل - سيتم التطبيق عند الضغط على زر "تطبيق"
         });
 
         // تأثيرات hover للأزرار
