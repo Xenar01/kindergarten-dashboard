@@ -41,6 +41,29 @@ class FiltersManager {
         if (this.onFilterChange) {
             this.onFilterChange();
         }
+        
+        // عرض رسالة تأكيد
+        this._showResetNotification();
+    }
+    
+    /**
+     * عرض رسالة تأكيد إلغاء التصفية
+     */
+    _showResetNotification() {
+        // إنشاء عنصر الإشعار
+        const notification = document.createElement('div');
+        notification.className = 'reset-notification';
+        notification.textContent = '✓ تم إلغاء التصفية';
+        document.body.appendChild(notification);
+        
+        // إضافة كلاس active بعد لحظة للتأثير الحركي
+        setTimeout(() => notification.classList.add('active'), 10);
+        
+        // إزالة الإشعار بعد 2 ثانية
+        setTimeout(() => {
+            notification.classList.remove('active');
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
     }
 
     /**
@@ -49,6 +72,8 @@ class FiltersManager {
     openPanel() {
         this.elements.filterPanel?.classList.add('open');
         this.elements.filterOverlay?.classList.add('active');
+        // إخفاء زر التصفية عند فتح اللوحة
+        this.elements.filterBtn?.classList.add('hidden');
     }
 
     /**
@@ -57,6 +82,8 @@ class FiltersManager {
     closePanel() {
         this.elements.filterPanel?.classList.remove('open');
         this.elements.filterOverlay?.classList.remove('active');
+        // إظهار زر التصفية عند إغلاق اللوحة
+        this.elements.filterBtn?.classList.remove('hidden');
     }
 
     // ========== دوال مساعدة خاصة ==========

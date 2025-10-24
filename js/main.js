@@ -122,6 +122,42 @@ class KindergartenApp {
         // لوحة الإدارة - تمرير جميع البيانات
         this.adminPanel = new AdminPanel(CONFIG.ADMIN_PASSWORD, this.warningsData, this.allData);
         this.adminPanel.initialize();
+        
+        // تفعيل الضغط 7 مرات على الأيقونة
+        this._initializeSecretTap();
+    }
+    
+    /**
+     * تفعيل الضغط 7 مرات على أيقونة الترويسة لفتح لوحة الإدارة
+     */
+    _initializeSecretTap() {
+        const headerIcon = document.getElementById('headerIcon');
+        if (!headerIcon) return;
+        
+        let tapCount = 0;
+        let tapTimer = null;
+        
+        headerIcon.addEventListener('click', () => {
+            tapCount++;
+            
+            // إلغاء المؤقت السابق
+            if (tapTimer) {
+                clearTimeout(tapTimer);
+            }
+            
+            // إذا وصل العداد إلى 7، فتح لوحة الإدارة
+            if (tapCount >= 7) {
+                tapCount = 0;
+                if (this.adminPanel) {
+                    this.adminPanel.openModal();
+                }
+            } else {
+                // إعادة تعيين العداد بعد 2 ثانية
+                tapTimer = setTimeout(() => {
+                    tapCount = 0;
+                }, 2000);
+            }
+        });
     }
 
     /**

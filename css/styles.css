@@ -1414,3 +1414,31 @@ footer {
         right: -100%;
     }
 }
+/* ========== إشعار إعادة التعيين ========== */
+.reset-notification {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 10000;
+    transition: bottom 0.3s ease-out;
+}
+
+.reset-notification.active {
+    bottom: 30px;
+}
+
+/* ========== إخفاء الأزرار العائمة ========== */
+.floating-btn.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
