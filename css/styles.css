@@ -1620,7 +1620,7 @@ footer {
     display: flex;
     gap: 20px;
     flex: 1;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -1641,4 +1641,4 @@ footer {
     .table-actions button {
         flex: 1;
     }
-}
+}}
