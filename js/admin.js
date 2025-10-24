@@ -14,6 +14,11 @@ class AdminPanel {
         this.sortDirection = 'asc';
         this.searchQuery = '';
         this.filteredData = [];
+        
+        // إعدادات التصفية
+        this.ageFilter = 'all';
+        this.genderFilter = 'all';
+        this.kgFilter = 'all';
     }
 
     /**
@@ -102,18 +107,91 @@ class AdminPanel {
         this._renderTable();
         this._renderPagination();
     }
+    
+    /**
+     * إعادة تعيين جميع الفلاتر والبحث
+     */
+    _resetTableFilters() {
+        // إعادة تعيين قيم الفلاتر
+        this.ageFilter = 'all';
+        this.genderFilter = 'all';
+        this.kgFilter = 'all';
+        this.searchQuery = '';
+        this.currentPage = 1;
+        this.sortColumn = null;
+        this.sortDirection = 'asc';
+        
+        // تحديث عناصر الواجهة
+        if (this.elements.tableAgeFilter) this.elements.tableAgeFilter.value = 'all';
+        if (this.elements.tableGenderFilter) this.elements.tableGenderFilter.value = 'all';
+        if (this.elements.tableKgFilter) this.elements.tableKgFilter.value = 'all';
+        if (this.elements.tableSearch) this.elements.tableSearch.value = '';
+        
+        // إزالة أيقونات الفرز
+        document.querySelectorAll('.data-table th').forEach(header => {
+            header.classList.remove('sort-asc', 'sort-desc');
+        });
+        
+        // تحديث البيانات
+        this._displayDataTable();
+        
+        // عرض رسالة تأكيد
+        this._showTableNotification('تم إعادة تعيين جميع الفلاتر');
+    }
+    
+    /**
+     * عرض رسالة إشعار للجدول
+     */
+    _showTableNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'table-notification';
+        notification.textContent = `✓ ${message}`;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.classList.add('active'), 10);
+        
+        setTimeout(() => {
+            notification.classList.remove('active');
+            setTimeout(() => notification.remove(), 300);
+        }, 2000);
+    }
 
     /**
-     * تطبيق البحث
+     * تطبيق البحث والتصفية
      */
     _applySearch() {
-        if (!this.searchQuery) {
-            this.filteredData = [...this.allData];
-            return;
-        }
+        this.filteredData = [...this.allData];
+        
+        // تطبيق فلاتر العمر والجنس والخبرة السابقة
+        this.filteredData = this.filteredData.filter(item => {
+            // فلتر العمر
+            if (this.ageFilter !== 'all') {
+                if (this.ageFilter === 'older') {
+                    if (item.age <= 8) return false;
+                } else {
+                    if (item.age !== parseInt(this.ageFilter)) return false;
+                }
+            }
+            
+            // فلتر الجنس
+            if (this.genderFilter !== 'all') {
+                if (item.gender !== this.genderFilter) return false;
+            }
+            
+            // فلتر الخبرة السابقة
+            if (this.kgFilter !== 'all') {
+                const hasPrevKG = this.kgFilter === 'true';
+                if (item.prevKG !== hasPrevKG) return false;
+            }
+            
+            return true;
+        });
+        
+        // تطبيق البحث النصي
+        if (!this.searchQuery) return;
 
         const query = this.searchQuery.toLowerCase();
-        this.filteredData = this.allData.filter(item => {
+        this.filteredData = this.filteredData.filter(item => {
             return (
                 item.childName.toLowerCase().includes(query) ||
                 item.fatherName.toLowerCase().includes(query) ||
@@ -232,6 +310,11 @@ class AdminPanel {
      * تصدير البيانات إلى CSV
      */
     _exportToCSV() {
+        if (this.filteredData.length === 0) {
+            this._showTableNotification('لا توجد بيانات للتصدير');
+            return;
+        }
+        
         const headers = ['#', 'الاسم', 'العمر', 'الجنس', 'روضة سابقة', 'اسم الأب', 'رقم الهاتف'];
         const rows = this.filteredData.map((item, index) => [
             index + 1,
@@ -254,8 +337,12 @@ class AdminPanel {
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `kindergarten-data-${new Date().toISOString().split('T')[0]}.csv`;
+        const timestamp = new Date().toISOString().split('T')[0];
+        link.download = `بيانات-الروضة-${timestamp}-${this.filteredData.length}-سجل.csv`;
         link.click();
+        
+        // عرض رسالة نجاح
+        this._showTableNotification(`تم تصدير ${this.filteredData.length} سجل بنجاح`);
     }
 
     // ========== دوال مساعدة خاصة ==========
@@ -281,10 +368,16 @@ class AdminPanel {
             // الجدول
             tableSearch: document.getElementById('tableSearch'),
             exportBtn: document.getElementById('exportBtn'),
+            resetTableBtn: document.getElementById('resetTableBtn'),
             dataTableBody: document.getElementById('dataTableBody'),
             paginationInfo: document.getElementById('paginationInfo'),
             paginationPrev: document.getElementById('paginationPrev'),
-            paginationNext: document.getElementById('paginationNext')
+            paginationNext: document.getElementById('paginationNext'),
+            
+            // فلاتر الجدول
+            tableAgeFilter: document.getElementById('tableAgeFilter'),
+            tableGenderFilter: document.getElementById('tableGenderFilter'),
+            tableKgFilter: document.getElementById('tableKgFilter')
         };
     }
 
@@ -337,6 +430,37 @@ class AdminPanel {
 
         // تصدير البيانات
         this.elements.exportBtn?.addEventListener('click', () => this._exportToCSV());
+        
+        // إعادة تعيين الفلاتر
+        this.elements.resetTableBtn?.addEventListener('click', () => this._resetTableFilters());
+        
+        // فلاتر الجدول
+        this.elements.tableAgeFilter?.addEventListener('change', (e) => {
+            this.ageFilter = e.target.value;
+            this.currentPage = 1;
+            this._applySearch();
+            this._applySort();
+            this._renderTable();
+            this._renderPagination();
+        });
+        
+        this.elements.tableGenderFilter?.addEventListener('change', (e) => {
+            this.genderFilter = e.target.value;
+            this.currentPage = 1;
+            this._applySearch();
+            this._applySort();
+            this._renderTable();
+            this._renderPagination();
+        });
+        
+        this.elements.tableKgFilter?.addEventListener('change', (e) => {
+            this.kgFilter = e.target.value;
+            this.currentPage = 1;
+            this._applySearch();
+            this._applySort();
+            this._renderTable();
+            this._renderPagination();
+        });
 
         // أزرار التنقل
         this.elements.paginationPrev?.addEventListener('click', () => {

@@ -1442,3 +1442,106 @@ footer {
     transform: scale(0.8);
     transition: all 0.3s ease;
 }
+
+/* ========== أدوات التصفية السريعة في الجدول ========== */
+.table-filters {
+    display: flex;
+    gap: 20px;
+    padding: 15px 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group-inline label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.table-filter-select {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    color: #1e293b;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.table-filter-select:hover {
+    border-color: #0284c7;
+}
+
+.table-filter-select:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1);
+}
+
+/* تحسين زر إعادة التعيين */
+.table-btn-secondary {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    color: white;
+}
+
+.table-btn-secondary:hover {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%);
+    transform: translateY(-2px);
+}
+
+/* تحسين تصميم أزرار الجدول */
+.table-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .table-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group-inline {
+        width: 100%;
+    }
+    
+    .table-filter-select {
+        flex: 1;
+        min-width: auto;
+    }
+}
+
+/* ========== إشعار الجدول ========== */
+.table-notification {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 10001;
+    transition: top 0.3s ease-out;
+}
+
+.table-notification.active {
+    top: 30px;
+}
