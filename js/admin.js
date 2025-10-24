@@ -12,7 +12,6 @@ class AdminPanel {
         this.rowsPerPage = 10;
         this.sortColumn = null;
         this.sortDirection = 'asc';
-        this.searchQuery = '';
         this.filteredData = [];
         
         // إعدادات التصفية
@@ -43,32 +42,8 @@ class AdminPanel {
         // فتح اللوحة
         this._showDashboard();
         
-        // إعادة ربط حدث البحث
-        this._reattachSearchListener();
-        
         // التمرير للأعلى
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    /**
-     * إعادة ربط مستمع حدث البحث
-     */
-    _reattachSearchListener() {
-        const searchInput = document.getElementById('tableSearch');
-        if (searchInput) {
-            // إزالة المستمع القديم وإضافة جديد
-            const newInput = searchInput.cloneNode(true);
-            searchInput.parentNode.replaceChild(newInput, searchInput);
-            
-            newInput.addEventListener('input', (e) => {
-                this.searchQuery = e.target.value;
-                this.currentPage = 1;
-                this._applySearch();
-                this._applySort();
-                this._renderTable();
-                this._renderPagination();
-            });
-        }
     }
 
     /**
@@ -133,14 +108,13 @@ class AdminPanel {
     }
     
     /**
-     * إعادة تعيين جميع الفلاتر والبحث
+     * إعادة تعيين جميع الفلاتر
      */
     _resetTableFilters() {
         // إعادة تعيين قيم الفلاتر
         this.ageFilter = 'all';
         this.genderFilter = 'all';
         this.kgFilter = 'all';
-        this.searchQuery = '';
         this.currentPage = 1;
         this.sortColumn = null;
         this.sortDirection = 'asc';
@@ -149,7 +123,6 @@ class AdminPanel {
         if (this.elements.tableAgeFilter) this.elements.tableAgeFilter.value = 'all';
         if (this.elements.tableGenderFilter) this.elements.tableGenderFilter.value = 'all';
         if (this.elements.tableKgFilter) this.elements.tableKgFilter.value = 'all';
-        if (this.elements.tableSearch) this.elements.tableSearch.value = '';
         
         // إزالة أيقونات الفرز
         document.querySelectorAll('.data-table th').forEach(header => {
@@ -181,7 +154,7 @@ class AdminPanel {
     }
 
     /**
-     * تطبيق البحث والتصفية
+     * تطبيق التصفية
      */
     _applySearch() {
         this.filteredData = [...this.allData];
@@ -209,19 +182,6 @@ class AdminPanel {
             }
             
             return true;
-        });
-        
-        // تطبيق البحث النصي
-        if (!this.searchQuery) return;
-
-        const query = this.searchQuery.toLowerCase();
-        this.filteredData = this.filteredData.filter(item => {
-            return (
-                item.childName.toLowerCase().includes(query) ||
-                item.fatherName.toLowerCase().includes(query) ||
-                item.phone.includes(query) ||
-                item.gender.includes(query)
-            );
         });
     }
 
@@ -390,7 +350,6 @@ class AdminPanel {
             warningCardsAdmin: document.getElementById('warningCardsAdmin'),
             
             // الجدول
-            tableSearch: document.getElementById('tableSearch'),
             exportBtn: document.getElementById('exportBtn'),
             resetTableBtn: document.getElementById('resetTableBtn'),
             dataTableBody: document.getElementById('dataTableBody'),
@@ -440,16 +399,6 @@ class AdminPanel {
             if (e.key === 'Enter') {
                 this._handleLogin();
             }
-        });
-
-        // البحث في الجدول
-        this.elements.tableSearch?.addEventListener('input', (e) => {
-            this.searchQuery = e.target.value;
-            this.currentPage = 1;
-            this._applySearch();
-            this._applySort();
-            this._renderTable();
-            this._renderPagination();
         });
 
         // تصدير البيانات

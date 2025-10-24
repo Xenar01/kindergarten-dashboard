@@ -314,15 +314,44 @@
                     
                     <!-- حاوية الجدول -->
                     <div class="data-table-container">
-                        <!-- أدوات التحكم -->
-                        <div class="table-controls">
-                            <div class="table-search">
-                                <input 
-                                    type="text" 
-                                    id="tableSearch" 
-                                    placeholder="🔍 ابحث بالاسم، رقم الهاتف، أو اسم الأب..."
-                                >
+                        <!-- أدوات التحكم والتصفية -->
+                        <div class="table-controls-wrapper">
+                            <!-- أدوات التصفية السريعة -->
+                            <div class="table-filters-top">
+                                <div class="filter-group-inline">
+                                    <label for="tableAgeFilter">العمر:</label>
+                                    <select id="tableAgeFilter" class="table-filter-select">
+                                        <option value="all">الكل</option>
+                                        <option value="1">1 سنة</option>
+                                        <option value="2">2 سنوات</option>
+                                        <option value="3">3 سنوات</option>
+                                        <option value="4">4 سنوات</option>
+                                        <option value="5">5 سنوات</option>
+                                        <option value="6">6 سنوات</option>
+                                        <option value="7">7 سنوات</option>
+                                        <option value="8">8 سنوات</option>
+                                        <option value="older">أكبر من 8</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group-inline">
+                                    <label for="tableGenderFilter">الجنس:</label>
+                                    <select id="tableGenderFilter" class="table-filter-select">
+                                        <option value="all">الكل</option>
+                                        <option value="ذكر">ذكر</option>
+                                        <option value="أنثى">أنثى</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group-inline">
+                                    <label for="tableKgFilter">روضة سابقة:</label>
+                                    <select id="tableKgFilter" class="table-filter-select">
+                                        <option value="all">الكل</option>
+                                        <option value="true">نعم</option>
+                                        <option value="false">لا</option>
+                                    </select>
+                                </div>
                             </div>
+                            
+                            <!-- أزرار التحكم -->
                             <div class="table-actions">
                                 <button class="table-btn table-btn-secondary" id="resetTableBtn">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -336,41 +365,6 @@
                                     </svg>
                                     تصدير Excel
                                 </button>
-                            </div>
-                        </div>
-
-                        <!-- أدوات التصفية السريعة -->
-                        <div class="table-filters">
-                            <div class="filter-group-inline">
-                                <label for="tableAgeFilter">العمر:</label>
-                                <select id="tableAgeFilter" class="table-filter-select">
-                                    <option value="all">الكل</option>
-                                    <option value="1">1 سنة</option>
-                                    <option value="2">2 سنوات</option>
-                                    <option value="3">3 سنوات</option>
-                                    <option value="4">4 سنوات</option>
-                                    <option value="5">5 سنوات</option>
-                                    <option value="6">6 سنوات</option>
-                                    <option value="7">7 سنوات</option>
-                                    <option value="8">8 سنوات</option>
-                                    <option value="older">أكبر من 8</option>
-                                </select>
-                            </div>
-                            <div class="filter-group-inline">
-                                <label for="tableGenderFilter">الجنس:</label>
-                                <select id="tableGenderFilter" class="table-filter-select">
-                                    <option value="all">الكل</option>
-                                    <option value="ذكر">ذكر</option>
-                                    <option value="أنثى">أنثى</option>
-                                </select>
-                            </div>
-                            <div class="filter-group-inline">
-                                <label for="tableKgFilter">روضة سابقة:</label>
-                                <select id="tableKgFilter" class="table-filter-select">
-                                    <option value="all">الكل</option>
-                                    <option value="true">نعم</option>
-                                    <option value="false">لا</option>
-                                </select>
                             </div>
                         </div>
 
